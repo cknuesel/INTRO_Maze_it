@@ -1,0 +1,1 @@
+INTRO Groups can place their projects here, inside their own group folder.

@@ -1,0 +1,1 @@
+Initial material for the course. All material will be provided with a Git repository afterwards.
