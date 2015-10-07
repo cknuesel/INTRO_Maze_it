@@ -5,15 +5,14 @@
  *      Author: Cyrill
  */
 
-#ifndef SOURCES_PLATTFORM_LOCAL_H_
-#define SOURCES_PLATTFORM_LOCAL_H_
+#ifndef SOURCES_PLATFORM_LOCAL_H_
+#define SOURCES_PLATFORM_LOCAL_H_
 
 /* number of LED's on platform */
-#define PL_CONFIG_NOF_LED  (3)
+#define PL_CONFIG_NOF_LED  (2)
 
 /* disable macros, defined or not */
 //#define PL_CONFIG_DISABLE_HAS_LED
 
 
-
-#endif /* SOURCES_PLATTFORM_LOCAL_H_ */
+#endif /* SOURCES_PLATFORM_LOCAL_H_ */
