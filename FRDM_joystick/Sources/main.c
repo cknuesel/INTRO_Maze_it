@@ -30,7 +30,6 @@
 /* Including needed modules to compile this module/procedure */
 #include "Cpu.h"
 #include "Events.h"
-#include "LED_D3_RGB_R.h"
 #include "LEDpin1.h"
 #include "BitIoLdd1.h"
 /* Including shared modules, which are used for whole project */
@@ -61,7 +60,7 @@ int main(void)
   #endif
   /*** End of RTOS startup code.  ***/
   /*** Processor Expert end of main routine. DON'T MODIFY THIS CODE!!! ***/
-  for(;;){}
+  APP_Run();
   /*** Processor Expert end of main routine. DON'T WRITE CODE BELOW!!! ***/
 } /*** End of main routine. DO NOT MODIFY THIS TEXT!!! ***/
 
