@@ -19,19 +19,27 @@
 ** @brief
 **         Main module.
 **         This module contains user's application code.
-*/
+*/         
 /*!
 **  @addtogroup main_module main module documentation
 **  @{
-*/
+*/         
 /* MODULE main */
 
 
 /* Including needed modules to compile this module/procedure */
 #include "Cpu.h"
 #include "Events.h"
+#include "LED1.h"
 #include "LEDpin1.h"
 #include "BitIoLdd1.h"
+#include "LED2.h"
+#include "LEDpin2.h"
+#include "BitIoLdd2.h"
+#include "LED3.h"
+#include "LEDpin3.h"
+#include "BitIoLdd3.h"
+#include "WAIT1.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
@@ -51,6 +59,7 @@ int main(void)
 
   /* Write your code here */
   /* For example: for(;;) { } */
+  APP_Run();
 
 
   /*** Don't write any code pass this line, or it will be deleted during code generation. ***/
@@ -60,7 +69,7 @@ int main(void)
   #endif
   /*** End of RTOS startup code.  ***/
   /*** Processor Expert end of main routine. DON'T MODIFY THIS CODE!!! ***/
-  APP_Run();
+  for(;;){}
   /*** Processor Expert end of main routine. DON'T WRITE CODE BELOW!!! ***/
 } /*** End of main routine. DO NOT MODIFY THIS TEXT!!! ***/
 

@@ -8,7 +8,7 @@
 #ifndef SOURCES_COMMON_APPLICATION_H_
 #define SOURCES_COMMON_APPLICATION_H_
 
-
+void APP_Run(void);
 
 
 
