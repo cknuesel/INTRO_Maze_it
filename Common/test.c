@@ -8,7 +8,7 @@
 #define super 1
 
 
-printf("ech schriibe au öppis ine");
+#define megagigaoderergendoeppis printf("ech schriibe au öppis ine")
 
 int cyrill = super;
 
