@@ -12,3 +12,4 @@ printf("ech schriibe au öppis ine");
 
 int cyrill = super;
 
+int imba = 1000;
