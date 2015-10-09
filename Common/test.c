@@ -5,4 +5,6 @@
  *      Author: Cyrill
  */
 
+#define super 1
 
+int cyrill = super;
