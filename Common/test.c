@@ -16,4 +16,8 @@ int imba = 1000;
 
 int demanuchagarnued = 9;
 
+<<<<<<< .merge_file_a09828
 long decyrilleschenriiiiiisehomofoerscht = 1425;
+=======
+int test = 1234;
+>>>>>>> .merge_file_a11188
