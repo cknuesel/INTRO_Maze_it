@@ -11,6 +11,12 @@
 #if PL_CONFIG_HAS_LED
   #include "LED.h"
 #endif
+#if PL_CONFIG_HAS_EVENTS
+  #include "Event.h"
+#endif
+#if PL_CONFIG_HAS_TIMER
+  #include "Timer.h"
+#endif
 
 void APP_Run(void) {
  PL_Init();
