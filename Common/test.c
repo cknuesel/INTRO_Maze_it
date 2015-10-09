@@ -15,3 +15,5 @@ int cyrill = super;
 int imba = 1000;
 
 int demanuchagarnued = 9;
+
+int test = 1234;
