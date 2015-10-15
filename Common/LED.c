@@ -39,8 +39,8 @@ void LED_Deinit(void) {
 #endif
 }
 
+
 void LED_Test(void) {
-	for(;;) {
 #if PL_CONFIG_NOF_LED>=1
 	LED1_On();
 	WAIT1_Waitms(500);
@@ -59,7 +59,7 @@ void LED_Test(void) {
 #if PL_CONFIG_NOF_LED>=4
 	#error "only 3 LED ;)"
 #endif
-	}
 }
+
 
 #endif /* PL_CONFIG_HAS_LED */

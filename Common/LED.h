@@ -26,5 +26,4 @@ void LED_Deinit(void);
 void LED_Test(void);
 
 
-
 #endif /* SOURCES_COMMON_LED_H_ */
