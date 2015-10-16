@@ -17,6 +17,9 @@
 #if PL_CONFIG_HAS_TIMER
   #include "Timer.h"
 #endif
+#if PL_CONFIG_HAS_KEYS
+  #include "Keys.h"
+#endif
 
 static void APP_EvntHandler(EVNT_Handle event) {
   switch(event) {

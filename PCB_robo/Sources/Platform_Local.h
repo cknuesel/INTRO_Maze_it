@@ -10,6 +10,7 @@
 
 /* number of LED's on platform */
 #define PL_CONFIG_NOF_LED  (2)
+#define PL_CONFIG_NOF_KEYS (1)
 
 /* disable macros, defined or not */
 //#define PL_CONFIG_DISABLE_HAS_LED

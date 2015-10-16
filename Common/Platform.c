@@ -15,6 +15,9 @@
 #if PL_CONFIG_HAS_TIMER
   #include "Timer.h"
 #endif
+#if PL_CONFIG_HAS_KEYS
+  #include "Keys.h"
+#endif
 
 void PL_Init(void) {
 #if PL_CONFIG_HAS_LED
@@ -25,6 +28,9 @@ void PL_Init(void) {
 #endif
 #if PL_CONFIG_HAS_TIMER
   TMR_Init();
+#endif
+#if PL_CONFIG_HAS_KEYS
+  KEY_Init();
 #endif
 }
 
@@ -37,5 +43,8 @@ void PL_Deinit(void) {
 #endif
 #if PL_CONFIG_HAS_TIMER
   TMR_Deinit();
+#endif
+#if PL_CONFIG_HAS_KEYS
+  KEY_Deinit();
 #endif
 }

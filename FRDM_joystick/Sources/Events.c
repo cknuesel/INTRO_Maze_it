@@ -29,12 +29,19 @@
 #include "Cpu.h"
 #include "Events.h"
 
+
 #ifdef __cplusplus
 extern "C" {
 #endif 
 
 
 /* User includes (#include below this line is not maintained by Processor Expert) */
+
+#include "Platform.h"
+#if PL_CONFIG_HAS_TIMER
+#include "Timer.h"
+#endif
+
 
 /*
 ** ===================================================================
@@ -70,7 +77,10 @@ void Cpu_OnNMIINT(void)
 */
 void TI1_OnInterrupt(void)
 {
-  /* Write your code here ... */
+#if PL_CONFIG_HAS_TIMER
+	TMR_OnInterrupt();
+#endif
+
 }
 
 /* END Events */

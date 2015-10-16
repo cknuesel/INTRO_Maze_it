@@ -8,7 +8,7 @@
 #ifndef SOURCES_COMMON_TIMER_H_
 #define SOURCES_COMMON_TIMER_H_
 
-#define TMR_TICK_MS  1
+#define TMR_TICK_MS  10
   /*!< we get called every TMR_TICK_MS ms */
 
 /*! \brief Function called from timer interrupt every TMR_TICK_MS. */
