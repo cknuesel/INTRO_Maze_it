@@ -51,6 +51,9 @@ typedef enum EVNT_Handle {
   EVNT_SW7_RELEASED,
 #endif
   /*!< \todo Your events here */
+#if PL_CONFIG_HAS_SHELL
+  EVNT_TestConsole,
+#endif
   EVNT_NOF_EVENTS       /*!< Must be last one! */
 } EVNT_Handle;
 

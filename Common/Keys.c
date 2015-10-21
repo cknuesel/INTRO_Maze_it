@@ -9,6 +9,7 @@
  */
 
 #include "Platform.h"
+#include "CLS1.h"
 #if PL_CONFIG_HAS_KEYS
   #include "Keys.h"
 #if PL_CONFIG_HAS_EVENTS
@@ -71,6 +72,7 @@ void APP_KeyEvntHandler(EVNT_Handle event) {
     case EVNT_SW1_LPRESSED:
     case EVNT_SW1_RELEASED:
       LED1_Neg();
+      CLS1_SendStr("Rot\r\n", CLS1_GetStdio()->stdOut);
       break;
    #endif
   #if PL_CONFIG_NOF_KEYS >= 2
@@ -78,20 +80,23 @@ void APP_KeyEvntHandler(EVNT_Handle event) {
     case EVNT_SW2_LPRESSED:
     case EVNT_SW2_RELEASED:
       LED1_Neg();
+
       break;
    #endif
   #if PL_CONFIG_NOF_KEYS >= 3
     case EVNT_SW3_PRESSED:
     case EVNT_SW3_LPRESSED:
     case EVNT_SW3_RELEASED:
-      LED1_Neg();
+      LED3_Neg();
+      CLS1_SendStr("Blau\r\n", CLS1_GetStdio()->stdOut);
       break;
    #endif
   #if PL_CONFIG_NOF_KEYS >= 4
     case EVNT_SW4_PRESSED:
     case EVNT_SW4_LPRESSED:
     case EVNT_SW4_RELEASED:
-      LED1_Neg();
+    	CLS1_SendStr("Grün\r\n", CLS1_GetStdio()->stdOut);
+      LED2_Neg();
       break;
    #endif
   #if PL_CONFIG_NOF_KEYS >= 5

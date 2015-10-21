@@ -9,6 +9,9 @@
 #define SOURCES_COMMON_KEYS_H_
 
 #include "Platform.h"
+#if PL_CONFIG_HAS_LED
+#include "LED.h"
+#endif
 
 #if PL_CONFIG_HAS_KEYS
 
