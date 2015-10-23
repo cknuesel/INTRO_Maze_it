@@ -8,6 +8,10 @@
 #ifndef SOURCES_PLATFORM_LOCAL_H_
 #define SOURCES_PLATFORM_LOCAL_H_
 
+/* board identification */
+#define PL_CONFIG_BOARD_IS_FRDM
+
+
 /* number of LED's on platform */
 #define PL_CONFIG_NOF_LED  (3)
 #define PL_CONFIG_NOF_KEYS (7)

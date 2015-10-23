@@ -56,6 +56,8 @@
 #include "BT2.h"
 #include "Serial2.h"
 #include "ASerialLdd2.h"
+#include "BUZ1.h"
+#include "BitIoLdd4.h"
 
 #ifdef __cplusplus
 extern "C" {
