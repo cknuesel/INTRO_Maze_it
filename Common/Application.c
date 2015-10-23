@@ -9,6 +9,9 @@
 #include "Application.h"
 #include "WAIT1.h"
 #include "CLS1.h"
+#if PL_CONFIG_HAS_TRIGGER
+#include "Trigger.h"
+#endif
 #if PL_CONFIG_HAS_LED
   #include "LED.h"
 #endif
@@ -47,6 +50,14 @@ static void APP_EvntHandler(EVNT_Handle event) {
 	  CLS1_SendStr("123456789\r\n",CLS1_GetStdio()->stdOut );
       #endif
 	  break;
+  case EVENT_TRIGGER:
+#if !PL_CONFIG_EVENTS_AUTO_CLEAR
+      EVNT_ClearEvent(EVNT_TestConsole);
+    #endif
+  #if PL_CONFIG_HAS_TRIGGER
+      TRG_IncTick();
+#endif
+
 
 
   default:

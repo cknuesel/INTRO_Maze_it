@@ -19,6 +19,10 @@ void TMR_OnInterrupt(void) {
 	if((cntr%(BLINK_PERIOD_MS/TMR_TICK_MS))==0){
 		EVNT_SetEvent(EVENT_LED_HEARTBEAT);
 	}
+#if PL_CONFIG_HAS_TRIGGER
+	EVNT_SetEvent(EVENT_TRIGGER);
+#endif
+
 }
 
 void TMR_Init(void) {
