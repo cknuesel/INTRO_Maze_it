@@ -18,6 +18,9 @@
 
 void KEY_Scan(void) {
   /*! \todo check handling all keys */
+#if PL_CONFIG_HAS_DEBOUNCE
+  KEYDBNC_Process();
+#else
 #if PL_CONFIG_NOF_KEYS >= 1
   if (KEY1_Get()) { /* key pressed */
     EVNT_SetEvent(EVNT_SW1_PRESSED);
@@ -52,8 +55,67 @@ void KEY_Scan(void) {
   if (KEY7_Get()) { /* key pressed */
     EVNT_SetEvent(EVNT_SW7_PRESSED);
   }
+ #endif
 #endif
 }
+
+#if PL_CONFIG_HAS_KBI
+void KEY_EnableInterrupts(void) {
+#if PL_CONFIG_NOF_KEYS >= 1
+  SW1_Enable();
+#endif
+#if PL_CONFIG_NOF_KEYS >= 2
+  #error "only one keyboard interrupt key handled right now"
+#endif
+}
+#endif /* PL_CONFIG_HAS_KBI */
+
+#if PL_CONFIG_HAS_KBI
+void KEY_DisableInterrupts(void) {
+#if PL_CONFIG_NOF_KEYS >= 1
+  SW1_Disable();
+#endif
+#if PL_CONFIG_NOF_KEYS >= 2
+  #error "only one keyboard interrupt key handled right now"
+#endif
+}
+#endif /* PL_CONFIG_HAS_KBI */
+
+#if PL_CONFIG_HAS_KBI
+void KEY_OnInterrupt(KEY_Buttons button) {
+#if PL_CONFIG_HAS_DEBOUNCE
+  KEYDBNC_Process();
+#else
+  switch(button) {
+  #if PL_CONFIG_NOF_KEYS >= 1
+      case KEY_BTN1: EVNT_SetEvent(EVNT_SW1_PRESSED); break;
+  #endif
+  #if PL_CONFIG_NOF_KEYS >= 2
+      case KEY_BTN2: EVNT_SetEvent(EVNT_SW2_PRESSED); break;
+  #endif
+  #if PL_CONFIG_NOF_KEYS >= 3
+      case KEY_BTN3: EVNT_SetEvent(EVNT_SW3_PRESSED); break;
+  #endif
+  #if PL_CONFIG_NOF_KEYS >= 4
+      case KEY_BTN4: EVNT_SetEvent(EVNT_SW4_PRESSED); break;
+  #endif
+  #if PL_CONFIG_NOF_KEYS >= 5
+      case KEY_BTN5: EVNT_SetEvent(EVNT_SW5_PRESSED); break;
+  #endif
+  #if PL_CONFIG_NOF_KEYS >= 6
+      case KEY_BTN6: EVNT_SetEvent(EVNT_SW6_PRESSED); break;
+  #endif
+  #if PL_CONFIG_NOF_KEYS >= 6
+      case KEY_BTN7: EVNT_SetEvent(EVNT_SW7_PRESSED); break;
+  #endif
+      default:
+        /* unknown? */
+        break;
+    } /* switch */
+  #endif
+  }
+  #endif /* PL_CONFIG_HAS_KBI */
+
 
 /*! \brief Key driver initialization */
 void KEY_Init(void) {

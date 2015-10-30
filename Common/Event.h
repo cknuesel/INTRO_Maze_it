@@ -3,6 +3,10 @@
  *
  *  Created on: 09.10.2015
  *      Author: Cyrill
+ *
+ * This module implements a generic event driver. We are using numbered events starting with zero.
+ * EVNT_HandleEvent() can be used to process the pending events. Note that the event with the number zero
+ * has the highest priority and will be handled first
  */
 
 #ifndef SOURCES_COMMON_EVENT_H_
@@ -49,6 +53,13 @@ typedef enum EVNT_Handle {
   EVNT_SW7_PRESSED,
   EVNT_SW7_LPRESSED,
   EVNT_SW7_RELEASED,
+#endif
+#if PL_CONFIG_HAS_TETIRS
+  EVNT_TETRIS_LEFT,
+  EVNT_TETRIS_RIGHT,
+  EVNT_TETRIS_UP,
+  EVNT_TETRIS_DOWN,
+  EVNT_TETRIS_DROP,
 #endif
   /*!< \todo Your events here */
 #if PL_CONFIG_HAS_SHELL

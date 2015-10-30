@@ -24,6 +24,16 @@
 #if PL_CONFIG_HAS_KEYS
   #include "Keys.h"
 #endif
+#if PL_CONFIG_HAS_TETIRS
+  #include "Tetris.h"
+#endif
+#if PL_CONFIG_HAS_SHELL
+  #include "CLS1.h"
+#endif
+#if PL_CONFIG_HAS_BUZZER
+  #include "Buzzer.h"
+#endif
+
 
 static void APP_EvntHandler(EVNT_Handle event) {
   switch(event) {
@@ -57,9 +67,6 @@ static void APP_EvntHandler(EVNT_Handle event) {
   #if PL_CONFIG_HAS_TRIGGER
       TRG_IncTick();
 #endif
-
-
-
   default:
       #if PL_CONFIG_HAS_KEYS
 	  APP_KeyEvntHandler(event);
@@ -71,6 +78,9 @@ static void APP_EvntHandler(EVNT_Handle event) {
 
 
 static void App(void) {
+#if PL_CONFIG_HAS_SHELL
+  int cntr = 0;
+#endif
 
 	EVNT_SetEvent(EVNT_STARTUP);
 #if PL_CONFIG_HAS_SHELL
@@ -87,6 +97,20 @@ static void App(void) {
       #if PL_CONFIG_HAS_KEYS
 	    KEY_Scan();
       #endif
+#if PL_CONFIG_HAS_TETIRS
+    WAIT1_Waitms(50);
+    if (TETRIS_Run()==0) {
+      TETRIS_Start();
+    }
+  #else
+    #if PL_CONFIG_HAS_SHELL
+    cntr++;
+    if ((cntr%100)==0) {
+      CLS1_SendStr("hello world!\r\n", CLS1_GetStdio()->stdOut);
+    }
+    #endif
+    WAIT1_Waitms(10);
+  #endif
 
 }
 }

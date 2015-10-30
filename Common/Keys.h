@@ -110,6 +110,25 @@ typedef enum {
     /*!< if we do not have a button, then return 'not pressed' */
 #endif
 
+#if PL_CONFIG_HAS_KBI
+/*!
+ * \brief Function called from a keyboard interrupt (if supported).
+ * \param button Button for which interrupt has been generated.
+ */
+void KEY_OnInterrupt(KEY_Buttons button);
+
+/*!
+ * \brief Acknowledge any pending interrupt, and enable again keyboard interrupts
+ */
+void KEY_EnableInterrupts(void);
+
+/*!
+ * \brief Acknowledge any pending interrupt, and enable again keyboard interrupts
+ */
+void KEY_DisableInterrupts(void);
+
+#endif
+
 /*!
  * \brief Checks the key status and generates the events.
  */
