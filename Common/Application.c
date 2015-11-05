@@ -35,7 +35,7 @@
 #endif
 
 
-static void APP_EvntHandler(EVNT_Handle event) {
+void APP_EvntHandler(EVNT_Handle event) {
   switch(event) {
   case EVNT_STARTUP:
 #if !PL_CONFIG_EVENTS_AUTO_CLEAR
@@ -105,7 +105,6 @@ static void App(void) {
     #if PL_CONFIG_HAS_SHELL
 
     #endif
-    WAIT1_Waitms(10);
   #endif
 
 }
@@ -113,6 +112,10 @@ static void App(void) {
 
 void APP_Run(void) {
  PL_Init();
+#if PL_CONFIG_HAS_RTOS
+ RTOS_Run();
+#else
  App();
+#endif;
  PL_Deinit();
 }

@@ -31,7 +31,7 @@
 #define PL_CONFIG_HAS_TETRIS            (1 && !defined(PL_CONFIG_DISABLE_HAS_TETRIS))
 #define PL_CONFIG_HAS_DEBOUNCE          (1 && PL_CONFIG_HAS_KEYS)
 #define PL_CONFIG_HAS_KBI               (0 && !defined(PL_CONFIG_DISABLE_HAS_KBI) && PL_CONFIG_HAS_KEYS && defined(PL_CONFIG_BOARD_IS_ROBO))
-
+#define PL_CONFIG_HAS_RTOS				(1 && !defined(PL_CONFIG_DISABLE_HAS_RTOS))
 
 void PL_Init(void);
 void PL_Deinit(void);

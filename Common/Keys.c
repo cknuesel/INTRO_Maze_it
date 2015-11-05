@@ -131,13 +131,16 @@ void APP_KeyEvntHandler(EVNT_Handle event) {
   switch(event) {
   #if PL_CONFIG_NOF_KEYS >= 1
     case EVNT_SW1_PRESSED:
+		#if PL_CONFIG_NOF_KEYS >= 2
     	LED3_Neg();
+		#endif
+    	CLS1_SendStr("Bl pressed\r\n", CLS1_GetStdio()->stdOut);
     	break;
     case EVNT_SW1_LPRESSED:
     	CLS1_SendStr("Blauuuuuuuuuuuuuuuu\r\n", CLS1_GetStdio()->stdOut);
     	break;
     case EVNT_SW1_RELEASED:
-    	CLS1_SendStr("Bl\r\n", CLS1_GetStdio()->stdOut);
+    	CLS1_SendStr("Bl released\r\n", CLS1_GetStdio()->stdOut);
 	  #if PL_CONFIG_HAS_BUZZER
       	  BUZ_Beep(300,500);
 	  #endif
