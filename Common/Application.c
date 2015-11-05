@@ -47,7 +47,6 @@ static void APP_EvntHandler(EVNT_Handle event) {
 #if !PL_CONFIG_EVENTS_AUTO_CLEAR
       EVNT_ClearEvent(EVNT_LED_HEARTBEAT);
     #endif
-	  LED1_Neg();
 	  break;\
 
   case EVNT_TestConsole:
@@ -104,10 +103,7 @@ static void App(void) {
     }
   #else
     #if PL_CONFIG_HAS_SHELL
-    cntr++;
-    if ((cntr%100)==0) {
-      CLS1_SendStr("hello world!\r\n", CLS1_GetStdio()->stdOut);
-    }
+
     #endif
     WAIT1_Waitms(10);
   #endif

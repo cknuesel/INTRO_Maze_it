@@ -131,10 +131,13 @@ void APP_KeyEvntHandler(EVNT_Handle event) {
   switch(event) {
   #if PL_CONFIG_NOF_KEYS >= 1
     case EVNT_SW1_PRESSED:
+    	LED3_Neg();
+    	break;
     case EVNT_SW1_LPRESSED:
+    	CLS1_SendStr("Blauuuuuuuuuuuuuuuu\r\n", CLS1_GetStdio()->stdOut);
+    	break;
     case EVNT_SW1_RELEASED:
-      LED1_Neg();
-      CLS1_SendStr("Rot\r\n", CLS1_GetStdio()->stdOut);
+    	CLS1_SendStr("Bl\r\n", CLS1_GetStdio()->stdOut);
 	  #if PL_CONFIG_HAS_BUZZER
       	  BUZ_Beep(300,500);
 	  #endif
@@ -145,6 +148,7 @@ void APP_KeyEvntHandler(EVNT_Handle event) {
     case EVNT_SW2_LPRESSED:
     case EVNT_SW2_RELEASED:
       LED1_Neg();
+      CLS1_SendStr("Rot\r\n", CLS1_GetStdio()->stdOut);
 
       break;
    #endif
@@ -153,7 +157,8 @@ void APP_KeyEvntHandler(EVNT_Handle event) {
     case EVNT_SW3_LPRESSED:
     case EVNT_SW3_RELEASED:
       LED3_Neg();
-      CLS1_SendStr("Blau\r\n", CLS1_GetStdio()->stdOut);
+      LED2_Neg();
+      CLS1_SendStr("Gelb\r\n", CLS1_GetStdio()->stdOut);
       break;
    #endif
   #if PL_CONFIG_NOF_KEYS >= 4
