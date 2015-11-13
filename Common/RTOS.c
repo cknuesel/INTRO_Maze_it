@@ -29,13 +29,14 @@ static void T2(void* param) {
   xLastWakeTime = xTaskGetTickCount();
   for(;;) {
     LED1_Neg();
-    FRTOS1_vTaskDelayUntil(&xLastWakeTime, 50/portTICK_RATE_MS);
+    FRTOS1_vTaskDelayUntil(&xLastWakeTime, 1000*portTICK_RATE_MS);
   }
 }
 
 static void T3(void* param) {
   for(;;) {
     LED2_Neg();
+    FRTOS1_vTaskDelay(500*portTICK_RATE_MS);
   }
 }
 #endif
@@ -64,11 +65,11 @@ void RTOS_Run(void) {
 
 void RTOS_Init(void) {
   /*! \todo Add tasks here */
-  if (FRTOS1_xTaskCreate(AppTask, (signed portCHAR *)"App", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL) != pdPASS) {
+  if (FRTOS1_xTaskCreate(AppTask, (signed portCHAR *)"App", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL) != pdPASS) {
     for(;;){} /* error */
   }
 #if TEST_RTOS_TASKS
-  if (FRTOS1_xTaskCreate(T2, (signed portCHAR *)"T2", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL) != pdPASS) {
+  if (FRTOS1_xTaskCreate(T2, (signed portCHAR *)"T2", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL) != pdPASS) {
     for(;;){} /* error */
   }
   if (FRTOS1_xTaskCreate(T3, (signed portCHAR *)"T3", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL) != pdPASS) {

@@ -138,16 +138,22 @@ void APP_KeyEvntHandler(EVNT_Handle event) {
     	LED3_Neg();
 		#endif
     	CLS1_SendStr("Bl pressed\r\n", CLS1_GetStdio()->stdOut);
+		#if PL_CONFIG_HAS_MOTOR
+    		MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_LEFT), 0);
+    		MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_RIGHT), 0);
+		#endif
     	break;
     case EVNT_SW1_LPRESSED:
     	CLS1_SendStr("Blauuuuuuuuuuuuuuuu\r\n", CLS1_GetStdio()->stdOut);
+		#if PL_CONFIG_HAS_MOTOR
+    	  MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_LEFT), 30);
+    	  MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_RIGHT), -30);
+		#endif
     	break;
     case EVNT_SW1_RELEASED:
     	CLS1_SendStr("Bl released\r\n", CLS1_GetStdio()->stdOut);
 	  #if PL_CONFIG_HAS_BUZZER
       	  BUZ_Beep(300,500);
-
-
 	  #endif
       break;
    #endif

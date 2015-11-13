@@ -75,7 +75,7 @@ void Cpu_OnNMIINT(void)
 void TI1_OnInterrupt(void)
 {
   /* Write your code here ... */
-#if PL_CONFIG_HAS_TIMER
+#if !PL_CONFIG_HAS_RTOS && PL_CONFIG_HAS_TIMER
 	TMR_OnInterrupt();
 #endif
 }
@@ -147,6 +147,9 @@ void FRTOS1_vApplicationTickHook(void)
 {
   /* Called for every RTOS tick. */
   /* Write your code here ... */
+#if PL_CONFIG_HAS_RTOS && PL_CONFIG_HAS_TIMER
+	TMR_OnInterrupt();
+#endif
 }
 
 /*
