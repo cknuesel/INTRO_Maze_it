@@ -9,6 +9,9 @@
 #if PL_CONFIG_HAS_TIMER
 #include "Timer.h"
 #include "Event.h"
+#if PL_CONFIG_HAS_TRIGGER
+	#include "Trigger.h";
+#endif
 
 void TMR_OnInterrupt(void) {
   /* this one gets called from an interrupt!!!! */
@@ -20,7 +23,7 @@ void TMR_OnInterrupt(void) {
 		EVNT_SetEvent(EVENT_LED_HEARTBEAT);
 	}
 #if PL_CONFIG_HAS_TRIGGER
-	EVNT_SetEvent(EVENT_TRIGGER);
+	TRG_IncTick();
 #endif
 
 }

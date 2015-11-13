@@ -27,11 +27,15 @@
 #if PL_CONFIG_HAS_TETIRS
   #include "Tetris.h"
 #endif
-#if PL_CONFIG_HAS_SHELL
-  #include "CLS1.h"
-#endif
 #if PL_CONFIG_HAS_BUZZER
   #include "Buzzer.h"
+#endif
+#if PL_CONFIG_HAS_SHELL
+  #include "Shell.h"
+  #include "CLS1.h"
+#endif
+#if PL_CONFIG_HAS_RTOS
+  #include "RTOS.h"
 #endif
 
 
@@ -48,24 +52,6 @@ void APP_EvntHandler(EVNT_Handle event) {
       EVNT_ClearEvent(EVNT_LED_HEARTBEAT);
     #endif
 	  break;\
-
-  case EVNT_TestConsole:
-#if !PL_CONFIG_EVENTS_AUTO_CLEAR
-      EVNT_ClearEvent(EVNT_TestConsole);
-    #endif
-  #if PL_CONFIG_HAS_SHELL
-	  CLS1_SendStr("Dies ist ein Test\r\n",CLS1_GetStdio()->stdOut );
-	  //CLS1_SendNum8u(10,CLS1_GetStdio()->stdOut);
-	  CLS1_SendStr("123456789\r\n",CLS1_GetStdio()->stdOut );
-      #endif
-	  break;
-  case EVENT_TRIGGER:
-#if !PL_CONFIG_EVENTS_AUTO_CLEAR
-      EVNT_ClearEvent(EVNT_TestConsole);
-    #endif
-  #if PL_CONFIG_HAS_TRIGGER
-      TRG_IncTick();
-#endif
   default:
       #if PL_CONFIG_HAS_KEYS
 	  APP_KeyEvntHandler(event);
@@ -82,9 +68,6 @@ static void App(void) {
 #endif
 
 	EVNT_SetEvent(EVNT_STARTUP);
-#if PL_CONFIG_HAS_SHELL
-	EVNT_SetEvent(EVNT_TestConsole);
-#endif
 	  for(;;) {
 	  #if PL_CONFIG_HAS_EVENTS
 #if PL_CONFIG_EVENTS_AUTO_CLEAR

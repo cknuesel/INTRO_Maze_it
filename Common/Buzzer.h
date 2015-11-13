@@ -8,6 +8,19 @@
 #ifndef SOURCES_COMMON_BUZZER_H_
 #define SOURCES_COMMON_BUZZER_H_
 
+#include "Platform.h"
+#if PL_CONFIG_HAS_SHELL
+	#include "CLS1.h"
+
+/*!
+ * \brief Shell parser routine.
+ * \param cmd Pointer to command line string.
+ * \param handled Pointer to status if command has been handled. Set to TRUE if command was understood.
+ * \param io Pointer to stdio handle
+ * \return Error code, ERR_OK if everything was ok.
+ */
+  uint8_t BUZ_ParseCommand(const unsigned char *cmd, bool *handled, const CLS1_StdIOType *io);
+#endif
 
 /*!
  * \brief Let the buzzer sound for a specified time.
@@ -16,6 +29,12 @@
  * \return Error code, ERR_OK if everything is fine.
  */
 uint8_t BUZ_Beep(uint16_t freqHz, uint16_t durationMs);
+
+/*!
+ * \brief Plays a tune
+ * \return ERR_OK or error code
+ */
+uint8_t BUZ_PlayTune(void);
 
 /*!
  * \brief Initialization of the driver

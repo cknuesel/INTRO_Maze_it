@@ -62,12 +62,6 @@ typedef enum EVNT_Handle {
   EVNT_TETRIS_DROP,
 #endif
   /*!< \todo Your events here */
-#if PL_CONFIG_HAS_SHELL
-  EVNT_TestConsole,
-#endif
-#if PL_CONFIG_HAS_TRIGGER
-  EVENT_TRIGGER,
-#endif
   EVNT_NOF_EVENTS       /*!< Must be last one! */
 } EVNT_Handle;
 

@@ -28,10 +28,15 @@
   #include "Debounce.h"
   #include "KeyDebounce.h"
 #endif
-#if PL_CONFIG_HAS_BUZZER
+#if PL_CONFIG_HAS_RTOS
   #include "RTOS.h"
 #endif
-
+#if PL_CONFIG_HAS_SHELL
+  #include "Shell.h"
+#endif
+#if PL_CONFIG_HAS_MOTOR
+	#include "Motor.h"
+#endif
 
 
 
@@ -61,6 +66,13 @@ void PL_Init(void) {
 #if PL_CONFIG_HAS_DEBOUNCE
   RTOS_Init();
 #endif
+#if PL_CONFIG_HAS_SHELL
+  SHELL_Init();
+#endif
+#if PL_CONFIG_HAS_MOTOR
+	MOT_Init();
+#endif
+
 }
 
 void PL_Deinit(void) {
@@ -88,5 +100,11 @@ void PL_Deinit(void) {
 #endif
 #if PL_CONFIG_HAS_DEBOUNCE
   RTOS_Deinit();
+#endif
+#if PL_CONFIG_HAS_SHELL
+  SHELL_Deinit();
+#endif
+#if PL_CONFIG_HAS_MOTOR
+	MOT_Deinit();
 #endif
 }

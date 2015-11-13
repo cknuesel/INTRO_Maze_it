@@ -15,6 +15,9 @@
 #if PL_CONFIG_HAS_EVENTS
   #include "Event.h"
 #endif
+#if PL_CONFIG_HAS_MOTOR
+  #include "Motor.h"
+#endif
 
 void KEY_Scan(void) {
   /*! \todo check handling all keys */
@@ -143,6 +146,8 @@ void APP_KeyEvntHandler(EVNT_Handle event) {
     	CLS1_SendStr("Bl released\r\n", CLS1_GetStdio()->stdOut);
 	  #if PL_CONFIG_HAS_BUZZER
       	  BUZ_Beep(300,500);
+
+
 	  #endif
       break;
    #endif
@@ -159,7 +164,7 @@ void APP_KeyEvntHandler(EVNT_Handle event) {
     case EVNT_SW3_PRESSED:
     case EVNT_SW3_LPRESSED:
     case EVNT_SW3_RELEASED:
-      LED3_Neg();
+      LED1_Neg();
       LED2_Neg();
       CLS1_SendStr("Gelb\r\n", CLS1_GetStdio()->stdOut);
       break;
@@ -174,23 +179,26 @@ void APP_KeyEvntHandler(EVNT_Handle event) {
    #endif
   #if PL_CONFIG_NOF_KEYS >= 5
     case EVNT_SW5_PRESSED:
+    	LED1_Neg();
+    	break;
     case EVNT_SW5_LPRESSED:
     case EVNT_SW5_RELEASED:
-      LED1_Neg();
       break;
    #endif
   #if PL_CONFIG_NOF_KEYS >= 6
     case EVNT_SW6_PRESSED:
+    	LED2_Neg();
+    	 break;
     case EVNT_SW6_LPRESSED:
     case EVNT_SW6_RELEASED:
-      LED1_Neg();
       break;
   #endif
   #if PL_CONFIG_NOF_KEYS >= 7
     case EVNT_SW7_PRESSED:
+    	LED3_Neg();
+    	break;
     case EVNT_SW7_LPRESSED:
     case EVNT_SW7_RELEASED:
-      LED1_Neg();
       break;
    #endif
     default:
