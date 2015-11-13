@@ -29,7 +29,6 @@ typedef struct MOT_MotorDevice_ {
   void (*DirPutVal)(bool); /*!< function to set direction bit */
 } MOT_MotorDevice;
 
-static MOT_MotorDevice motorL, motorR;
 
 typedef enum {
   MOT_MOTOR_LEFT, /*!< left motor */
