@@ -241,10 +241,10 @@ static void ShellTask(void *pvParameters) {
     #if CLS1_DEFAULT_SERIAL
        ioLocal->stdOut(ch);
     #endif
-    #if PL_HAS_BLUETOOTH
+    #if PL_CONFIG_HAS_BLUETOOTH
         BT_stdio.stdOut(ch); /* copy on Bluetooth */
     #endif
-    #if PL_HAS_USB_CDC
+    #if PL_CONFIG_HAS_USB_CDC
         CDC_stdio.stdOut(ch); /* copy on USB CDC */
     #endif
       }
