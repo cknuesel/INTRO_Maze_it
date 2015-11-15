@@ -1,10 +1,1 @@
-/Debug/
-
-/Generated_Code/
-/Documentation/
-/.settings/
-*.g_c
-*.g_x
-.cwGeneratedFileSetLog
-/Platform_Local_Version.h
-ProjectInfo.xml
+Platform_Local_Version.h
