@@ -44,7 +44,7 @@ void SQUEUE_SendString(const unsigned char *str) {
 #endif
 }
 
-#if PL_SQUEUE_SINGLE_CHAR
+#if PL_CONFIG_HAS_SQUEUE_SINGLE_CHAR
 unsigned char SQUEUE_ReceiveChar(void) {
   /*! \todo Implement function */
   unsigned char ch;
