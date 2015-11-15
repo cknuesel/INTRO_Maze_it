@@ -6,5 +6,5 @@
 *.g_c
 *.g_x
 .cwGeneratedFileSetLog
-/Sources/Platform_Local_Version.h
+/Platform_Local_Version.h
 ProjectInfo.xml
