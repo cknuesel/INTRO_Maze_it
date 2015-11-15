@@ -232,7 +232,7 @@ static void ShellTask(void *pvParameters) {
     (void)CLS1_ReadAndParseWithCommandTable(rtt_buf, sizeof(rtt_buf), &RTT_Stdio, CmdParserTable);
 #endif
 #if PL_CONFIG_HAS_SHELL_QUEUE
-#if PL_SQUEUE_SINGLE_CHAR
+#if PL_CONFIG_HAS_SQUEUE_SINGLE_CHAR
     {
         /*! \todo Handle shell queue */
       unsigned char ch;
@@ -249,7 +249,7 @@ static void ShellTask(void *pvParameters) {
     #endif
       }
     }
-#else /* PL_SQUEUE_SINGLE_CHAR */
+#else /* PL_CONFIG_HAS_SQUEUE_SINGLE_CHAR */
     {
       const unsigned char *msg;
 
@@ -259,7 +259,7 @@ static void ShellTask(void *pvParameters) {
         FRTOS1_vPortFree((void*)msg);
       }
     }
-#endif /* PL_SQUEUE_SINGLE_CHAR */
+#endif /* PL_CONFIG_HAS_SQUEUE_SINGLE_CHAR */
 #endif /* PL_CONFIG_HAS_SHELL_QUEUE */
     FRTOS1_vTaskDelay(10/portTICK_RATE_MS);
   } /* for */

@@ -1,7 +1,7 @@
 /* ###################################################################
 **     Filename    : Events.h
 **     Project     : PCB_robo
-**     Processor   : MK22FX512VLQ12
+**     Processor   : MK22FX512VLK12
 **     Component   : Events
 **     Version     : Driver 01.00
 **     Compiler    : GNU C Compiler
@@ -50,9 +50,6 @@
 #include "BT1.h"
 #include "Serial1.h"
 #include "ASerialLdd1.h"
-#include "BT2.h"
-#include "Serial2.h"
-#include "ASerialLdd2.h"
 #include "BUZ1.h"
 #include "BitIoLdd4.h"
 #include "FRTOS1.h"
