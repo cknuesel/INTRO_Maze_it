@@ -49,7 +49,6 @@ void APP_EvntHandler(EVNT_Handle event) {
 	  break;
   case EVENT_LED_HEARTBEAT:
 #if !PL_CONFIG_EVENTS_AUTO_CLEAR
-      EVNT_ClearEvent(EVNT_LED_HEARTBEAT);
     #endif
 	  break;\
   default:

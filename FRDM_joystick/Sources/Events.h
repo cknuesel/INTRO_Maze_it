@@ -74,6 +74,23 @@
 #include "CDC1.h"
 #include "Tx1.h"
 #include "Rx1.h"
+#include "IFsh1.h"
+#include "IntFlashLdd1.h"
+#include "PDC1.h"
+#include "RESpin1.h"
+#include "BitIoLdd13.h"
+#include "SCEpin1.h"
+#include "BitIoLdd14.h"
+#include "D_Cpin1.h"
+#include "BitIoLdd15.h"
+#include "SPI1.h"
+#include "Clock1.h"
+#include "BitIoLdd11.h"
+#include "Output1.h"
+#include "BitIoLdd12.h"
+#include "GDisp1.h"
+#include "GFONT1.h"
+#include "FDisp1.h"
 
 #ifdef __cplusplus
 extern "C" {

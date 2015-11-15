@@ -35,6 +35,12 @@
 #if PL_CONFIG_HAS_MOTOR
   #include "Motor.h"
 #endif
+#if PL_CONFIG_HAS_MCP4728
+  #include "MCP4728.h"
+#endif
+#if PL_CONFIG_HAS_QUAD_CALIBRATION
+  #include "QUadCalib.h"
+#endif
 
 #define SHELL_COPY_CDC_TO_UART   (1)
 
@@ -63,6 +69,12 @@ static const CLS1_ParseCommandCallback CmdParserTable[] =
 #endif
 #if PL_CONFIG_HAS_MOTOR
   MOT_ParseCommand,
+#endif
+#if PL_CONFIG_HAS_MCP4728
+   MCP4728_ParseCommand,
+#endif
+#if PL_CONFIG_HAS_QUAD_CALIBRATION
+   QUADCALIB_ParseCommand,
 #endif
   NULL /* Sentinel */
 };

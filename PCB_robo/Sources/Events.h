@@ -86,6 +86,26 @@
 #include "QuadInt.h"
 #include "TimerIntLdd2.h"
 #include "TU_QuadInt.h"
+#include "LED_IR.h"
+#include "LEDpin3.h"
+#include "BitIoLdd19.h"
+#include "RefCnt.h"
+#include "IR1.h"
+#include "BitIoLdd13.h"
+#include "IR2.h"
+#include "BitIoLdd14.h"
+#include "IR3.h"
+#include "BitIoLdd15.h"
+#include "IR4.h"
+#include "BitIoLdd16.h"
+#include "IR5.h"
+#include "BitIoLdd17.h"
+#include "IR6.h"
+#include "BitIoLdd18.h"
+#include "IFsh1.h"
+#include "IntFlashLdd1.h"
+#include "GI2C1.h"
+#include "I2C1.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -211,6 +231,34 @@ void FRTOS1_vApplicationMallocFailedHook(void);
 ** ===================================================================
 */
 void QuadInt_OnInterrupt(void);
+
+void GI2C1_OnRequestBus(void);
+/*
+** ===================================================================
+**     Event       :  GI2C1_OnRequestBus (module Events)
+**
+**     Component   :  GI2C1 [GenericI2C]
+**     Description :
+**         User event which will be called before accessing the I2C bus.
+**         Useful for starting a critical section.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+
+void GI2C1_OnReleaseBus(void);
+/*
+** ===================================================================
+**     Event       :  GI2C1_OnReleaseBus (module Events)
+**
+**     Component   :  GI2C1 [GenericI2C]
+**     Description :
+**         User event which will be called after accessing the I2C bus.
+**         Useful for ending a critical section.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
 
 /* END Events */
 

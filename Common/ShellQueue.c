@@ -14,7 +14,7 @@
 
 static xQueueHandle SQUEUE_Queue;
 
-#if PL_SQUEUE_SINGLE_CHAR
+#if PL_CONFIG_HAS_SQUEUE_SINGLE_CHAR
   #define SQUEUE_LENGTH      32 /* items in queue, that's my buffer size */
   #define SQUEUE_ITEM_SIZE   1  /* each item is a single character */
 #else
@@ -24,7 +24,7 @@ static xQueueHandle SQUEUE_Queue;
 
 void SQUEUE_SendString(const unsigned char *str) {
   /*! \todo Implement function */
-#if PL_SQUEUE_SINGLE_CHAR
+#if PL_CONFIG_HAS_SQUEUE_SINGLE_CHAR
   while(*str!='\0') {
     if (FRTOS1_xQueueSendToBack(SQUEUE_Queue, str, 100/portTICK_RATE_MS)!=pdPASS) {
       /*for(;;){}*/ /* ups? */ /* loosing character */

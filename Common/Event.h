@@ -61,6 +61,16 @@ typedef enum EVNT_Handle {
   EVNT_TETRIS_DOWN,
   EVNT_TETRIS_DROP,
 #endif
+#if PL_CONFIG_HAS_SNAKE
+  EVNT_SNAKE_START_PAUSE,
+  EVNT_SNAKE_UP,
+  EVNT_SNAKE_DOWN,
+  EVNT_SNAKE_LEFT,
+  EVNT_SNAKE_RIGHT,
+#endif
+#if PL_CONFIG_HAS_REFLECTANCE
+  EVNT_REF_START_STOP_CALIBRATION,
+#endif
   /*!< \todo Your events here */
   EVNT_NOF_EVENTS       /*!< Must be last one! */
 } EVNT_Handle;
