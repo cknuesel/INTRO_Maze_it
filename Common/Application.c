@@ -47,10 +47,6 @@ void APP_EvntHandler(EVNT_Handle event) {
     #endif
 	  LED_Test();
 	  break;
-  case EVENT_LED_HEARTBEAT:
-#if !PL_CONFIG_EVENTS_AUTO_CLEAR
-    #endif
-	  break;\
   default:
       #if PL_CONFIG_HAS_KEYS
 	  APP_KeyEvntHandler(event);
