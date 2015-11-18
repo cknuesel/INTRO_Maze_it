@@ -3,7 +3,7 @@
   <Header>
     <Name>FRDM_joystick</Name>
     <SavedBy>Cyrill</SavedBy>
-    <ModificationStamp>24</ModificationStamp>
+    <ModificationStamp>25</ModificationStamp>
     <Date>2015-09-24</Date>
     <IDE>Eclipse IDE</IDE>
     <PEversion>1.12.0.RT7_b1515-0427</PEversion>
@@ -4535,7 +4535,7 @@
       <ItemId2>12</ItemId2>
       <Value2>true</Value2>
       <ItemId3>15</ItemId3>
-      <Value3>true</Value3>
+      <Value3>false</Value3>
       <ItemId4>18</ItemId4>
       <Value4>true</Value4>
       <ItemId5>19</ItemId5>
@@ -6229,7 +6229,7 @@
     <BeanType>LED</BeanType>
     <Name>LED3</Name>
     <CompNumb>15</CompNumb>
-    <CompEnabled>true</CompEnabled>
+    <CompEnabled>false</CompEnabled>
     <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
     <IconName>Led</IconName>
     <UserFolderName />
@@ -23589,7 +23589,7 @@
             </ItemState>
             <ItemState>
               <ItemSymbol>ModuleClockFreq</ItemSymbol>
-              <Value>unknown</Value>
+              <Value>48 MHz</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>PullUpDownGrp</ItemSymbol>
@@ -28163,14 +28163,14 @@
               <ItemSymbol>_Pin</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>PTE0/UART1_TX/RTC_CLKOUT/CMP0_OUT/I2C1_SDA</Value>
+              <Value>PTD3/SPI0_MISO/UART2_TX/TPM0_CH3/SPI0_MOSI</Value>
               <SharedPrphMode>false</SharedPrphMode>
             </ItemState>
             <ItemState>
               <ItemSymbol>PinSignal</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value />
+              <Value>LCD_RES</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>FeatureCondGrpLDD</ItemSymbol>
@@ -28209,7 +28209,7 @@
                     <ItemSymbol>_Pin</ItemSymbol>
                     <ReadOnly>false</ReadOnly>
                     <UserReadOnly>false</UserReadOnly>
-                    <Value>PTE0/UART1_TX/RTC_CLKOUT/CMP0_OUT/I2C1_SDA</Value>
+                    <Value>PTD3/SPI0_MISO/UART2_TX/TPM0_CH3/SPI0_MOSI</Value>
                     <SharedPrphMode>false</SharedPrphMode>
                   </ItemState>
                   <ItemState>
@@ -28759,14 +28759,14 @@
               <ItemSymbol>_Pin</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>PTE1/SPI1_MOSI/UART1_RX/SPI1_MISO/I2C1_SCL</Value>
+              <Value>ADC0_SE5b/PTD1/SPI0_SCK/TPM0_CH1</Value>
               <SharedPrphMode>false</SharedPrphMode>
             </ItemState>
             <ItemState>
               <ItemSymbol>PinSignal</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value />
+              <Value>LCD_SCE</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>FeatureCondGrpLDD</ItemSymbol>
@@ -28805,7 +28805,7 @@
                     <ItemSymbol>_Pin</ItemSymbol>
                     <ReadOnly>false</ReadOnly>
                     <UserReadOnly>false</UserReadOnly>
-                    <Value>PTE1/SPI1_MOSI/UART1_RX/SPI1_MISO/I2C1_SCL</Value>
+                    <Value>ADC0_SE5b/PTD1/SPI0_SCK/TPM0_CH1</Value>
                     <SharedPrphMode>false</SharedPrphMode>
                   </ItemState>
                   <ItemState>
@@ -29355,14 +29355,14 @@
               <ItemSymbol>_Pin</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>PTE2/SPI1_SCK</Value>
+              <Value>PTD2/SPI0_MOSI/UART2_RX/TPM0_CH2/SPI0_MISO</Value>
               <SharedPrphMode>false</SharedPrphMode>
             </ItemState>
             <ItemState>
               <ItemSymbol>PinSignal</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value />
+              <Value>LCD_DC</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>FeatureCondGrpLDD</ItemSymbol>
@@ -29401,7 +29401,7 @@
                     <ItemSymbol>_Pin</ItemSymbol>
                     <ReadOnly>false</ReadOnly>
                     <UserReadOnly>false</UserReadOnly>
-                    <Value>PTE2/SPI1_SCK</Value>
+                    <Value>PTD2/SPI0_MOSI/UART2_RX/TPM0_CH2/SPI0_MISO</Value>
                     <SharedPrphMode>false</SharedPrphMode>
                   </ItemState>
                   <ItemState>

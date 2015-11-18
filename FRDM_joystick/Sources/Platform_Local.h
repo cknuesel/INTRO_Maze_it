@@ -11,9 +11,16 @@
 /* board identification */
 #define PL_CONFIG_BOARD_IS_FRDM
 
+#define PL_CONFIG_HAS_LCD           (1)
 
 /* number of LED's on platform */
-#define PL_CONFIG_NOF_LED  (3)
+#if PL_CONFIG_HAS_LCD
+  #define PL_CONFIG_NOF_LED  (2) /* SCE of LCD uses same pin as blue RGB LED */
+#else
+  #define PL_CONFIG_NOF_LED  (3)
+#endif
+
+/* number of KEYS on platform */
 #define PL_CONFIG_NOF_KEYS (7)
 
 

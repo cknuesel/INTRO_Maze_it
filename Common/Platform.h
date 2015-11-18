@@ -18,8 +18,8 @@
 /* configuration macros"*/
 
 /* Games */
-#define PL_CONFIG_HAS_TETIRS          (1 && !defined(PL_CONFIG_DISABLE_HAS_TETIRS)&& defined(PL_CONFIG_BOARD_IS_FRDM))
-#define PL_CONFIG_HAS_SNAKE         (0 && !defined(PL_CONFIG_DISABLE_HAS_SNAKE)&& defined(PL_CONFIG_BOARD_IS_FRDM))
+#define PL_CONFIG_HAS_TETIRS          	(1 && !defined(PL_CONFIG_DISABLE_HAS_TETIRS)&& defined(PL_CONFIG_BOARD_IS_FRDM))
+#define PL_CONFIG_HAS_SNAKE           	(0 && !defined(PL_CONFIG_DISABLE_HAS_SNAKE)&& defined(PL_CONFIG_BOARD_IS_FRDM))
 
 /* Components */
 #define PL_CONFIG_HAS_LED				(1 && !defined(PL_CONFIG_DISABLE_HAS_LED))
@@ -35,7 +35,7 @@
 
 /* Others */
 #define PL_CONFIG_HAS_EVENTS			(1 && !defined(PL_CONFIG_DISABLE_HAS_EVENTS))
-	 #define PL_CONFIG_EVENTS_AUTO_CLEAR (0 && PL_CONFIG_HAS_EVENTS)
+	 #define PL_CONFIG_EVENTS_AUTO_CLEAR 	(0 && PL_CONFIG_HAS_EVENTS)
 #define PL_CONFIG_HAS_TIMER				(1 && !defined(PL_CONFIG_DISABLE_HAS_TIMER))
 #define PL_CONFIG_HAS_TRIGGER           (1 && !defined(PL_CONFIG_DISABLE_HAS_TRIGGER))
 #define PL_CONFIG_HAS_NVM				(1 && !defined(PL_CONFIG_DISABLE_HAS_NVM))
