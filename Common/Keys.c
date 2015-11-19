@@ -366,7 +366,9 @@ void KEY_Deinit(void) {
 			LED3_Neg();
 			#endif
 			CLS1_SendStr("Bl pressed\r\n", CLS1_GetStdio()->stdOut);
+			#if PL_CONFIG_HAS_LCD
 			PDC1_WriteLineStr(1,"Hello World");
+			#endif
 			#if PL_CONFIG_HAS_MOTOR
 				MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_LEFT), 0);
 				MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_RIGHT), 0);
