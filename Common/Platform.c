@@ -42,6 +42,9 @@
 	#if PL_CONFIG_HAS_PID
   	  #include "PID.h"
 	#endif
+	#if PL_CONFIG_HAS_DRIVE
+  	  #include "PID.h"
+	#endif
 #endif
 #if PL_CONFIG_HAS_REFLECTANCE
 	#include "Reflectance.h"
@@ -96,6 +99,9 @@ void PL_Init(void) {
 	#endif
 	#if PL_CONFIG_HAS_PID
 		PID_Init();
+	#endif
+	#if PL_CONFIG_HAS_DRIVE
+  	  DRV_Init();
 	#endif
 #endif
 #if PL_CONFIG_HAS_SEMAPHORE
@@ -154,6 +160,9 @@ void PL_Deinit(void) {
 	#endif
 	#if PL_CONFIG_HAS_MOTOR_TACHO
 	  TACHO_Deinit();
+	#endif
+	#if PL_CONFIG_HAS_DRIVE
+  	  DRV_Deinit();
 	#endif
 #endif
 #if PL_CONFIG_HAS_SEMAPHORE
