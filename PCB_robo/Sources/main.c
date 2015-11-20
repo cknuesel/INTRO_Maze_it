@@ -104,6 +104,8 @@
 #include "I2C1.h"
 #include "KSDK1.h"
 #include "KIN1.h"
+#include "TU_US.h"
+#include "TRIG.h"
 #include "BitIoLdd3.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"

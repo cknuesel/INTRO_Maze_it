@@ -36,15 +36,24 @@
 #endif
 #if PL_CONFIG_HAS_MOTOR
 	#include "Motor.h"
-	#if PL_CONFIG_HAS_REFLECTANCE
-	#include "Reflectance.h"
+	#if PL_CONFIG_HAS_MOTOR_TACHO
+		#include "Tacho.h"
+	#endif
+	#if PL_CONFIG_HAS_PID
+  	  #include "PID.h"
 	#endif
 #endif
+#if PL_CONFIG_HAS_REFLECTANCE
+	#include "Reflectance.h"
+	#endif
 #if PL_CONFIG_HAS_SNAKE
 	#include "Snake.h"
 #endif
 #if PL_CONFIG_HAS_NVM
 	#include "NVM_Config.h"
+#endif
+#if PL_CONFIG_HAS_ULTRASONIC
+  #include "Ultrasonic.h"
 #endif
 
 
@@ -82,8 +91,11 @@ void PL_Init(void) {
 #endif
 #if PL_CONFIG_HAS_MOTOR
 	MOT_Init();
-	#if PL_CONFIG_HAS_REFLECTANCE
-	REF_Init();
+	#if PL_CONFIG_HAS_MOTOR_TACHO
+		TACHO_Init();
+	#endif
+	#if PL_CONFIG_HAS_PID
+		PID_Init();
 	#endif
 #endif
 #if PL_CONFIG_HAS_SEMAPHORE
@@ -97,6 +109,9 @@ void PL_Init(void) {
 #endif
 #if PL_CONFIG_HAS_NVM
 	NVMC_Init();
+#endif
+#if PL_CONFIG_HAS_ULTRASONIC
+  US_Init();
 #endif
 }
 
@@ -134,8 +149,11 @@ void PL_Deinit(void) {
 #endif
 #if PL_CONFIG_HAS_MOTOR
 	MOT_Deinit();
-#if PL_CONFIG_HAS_REFLECTANCE
-	REF_Deinit();
+	#if PL_CONFIG_HAS_PID
+	  PID_Deinit();
+	#endif
+	#if PL_CONFIG_HAS_MOTOR_TACHO
+	  TACHO_Deinit();
 	#endif
 #endif
 #if PL_CONFIG_HAS_SEMAPHORE
@@ -149,5 +167,8 @@ void PL_Deinit(void) {
 #endif
 #if PL_CONFIG_HAS_NVM
 	NVMC_Init();
+#endif
+#if PL_CONFIG_HAS_ULTRASONIC
+  US_Deinit();
 #endif
 }
