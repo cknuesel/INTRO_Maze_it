@@ -102,6 +102,8 @@
 #include "IntFlashLdd1.h"
 #include "GI2C1.h"
 #include "I2C1.h"
+#include "KSDK1.h"
+#include "KIN1.h"
 #include "BitIoLdd3.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"

@@ -18,7 +18,7 @@
 /* configuration macros"*/
 
 /* Games */
-#define PL_CONFIG_HAS_TETIRS          	(1 && !defined(PL_CONFIG_DISABLE_HAS_TETIRS)&& defined(PL_CONFIG_BOARD_IS_FRDM))
+#define PL_CONFIG_HAS_TETIRS          	(0 && !defined(PL_CONFIG_DISABLE_HAS_TETIRS)&& defined(PL_CONFIG_BOARD_IS_FRDM))
 #define PL_CONFIG_HAS_SNAKE           	(0 && !defined(PL_CONFIG_DISABLE_HAS_SNAKE)&& defined(PL_CONFIG_BOARD_IS_FRDM))
 
 /* Components */
@@ -35,7 +35,7 @@
 
 /* Others */
 #define PL_CONFIG_HAS_EVENTS			(1 && !defined(PL_CONFIG_DISABLE_HAS_EVENTS))
-	 #define PL_CONFIG_EVENTS_AUTO_CLEAR 	(0 && PL_CONFIG_HAS_EVENTS)
+	 #define PL_CONFIG_EVENTS_AUTO_CLEAR 	(1 && PL_CONFIG_HAS_EVENTS)
 #define PL_CONFIG_HAS_TIMER				(1 && !defined(PL_CONFIG_DISABLE_HAS_TIMER))
 #define PL_CONFIG_HAS_TRIGGER           (1 && !defined(PL_CONFIG_DISABLE_HAS_TRIGGER))
 #define PL_CONFIG_HAS_NVM				(1 && !defined(PL_CONFIG_DISABLE_HAS_NVM))
@@ -45,10 +45,10 @@
 	#define PL_CONFIG_HAS_SEMAPHORE				(1 && PL_CONFIG_HAS_RTOS)
 
 /* Communication */
-#define PL_CONFIG_HAS_BLUETOOTH			(1 && !defined(PL_CONFIG_DISABLE_HAS_BLUETOOTH)&& defined(PL_CONFIG_BOARD_IS_ROBO))
+#define PL_CONFIG_HAS_BLUETOOTH			(0 && !defined(PL_CONFIG_DISABLE_HAS_BLUETOOTH)&& defined(PL_CONFIG_BOARD_IS_ROBO))
 #define PL_CONFIG_HAS_SHELL             (1 && !defined(PL_CONFIG_DISABLE_HAS_SHELL))
-	#define PL_CONFIG_HAS_SHELL_QUEUE             (0 && PL_CONFIG_HAS_SHELL)
-		#define PL_CONFIG_HAS_SQUEUE_SINGLE_CHAR             (0 && PL_CONFIG_HAS_SHELL_QUEUE)
+	#define PL_CONFIG_HAS_SHELL_QUEUE             (1 && PL_CONFIG_HAS_SHELL)
+		#define PL_CONFIG_HAS_SQUEUE_SINGLE_CHAR             (1 && PL_CONFIG_HAS_SHELL_QUEUE)
 #define PL_CONFIG_HAS_USB_CDC			(1 && !defined(PL_CONFIG_DISABLE_HAS_USB_CDC))
 #define PL_CONFIG_HAS_SEGGER_RTT		(0 && !defined(PL_CONFIG_DISABLE_HAS_SEGGER_RTT)&& defined(PL_CONFIG_BOARD_IS_ROBO))
 

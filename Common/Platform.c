@@ -36,9 +36,15 @@
 #endif
 #if PL_CONFIG_HAS_MOTOR
 	#include "Motor.h"
+	#if PL_CONFIG_HAS_REFLECTANCE
+	#include "Reflectance.h"
+	#endif
 #endif
 #if PL_CONFIG_HAS_SNAKE
 	#include "Snake.h"
+#endif
+#if PL_CONFIG_HAS_NVM
+	#include "NVM_Config.h"
 #endif
 
 
@@ -70,9 +76,15 @@ void PL_Init(void) {
 #endif
 #if PL_CONFIG_HAS_SHELL
   SHELL_Init();
+	#if PL_CONFIG_HAS_SHELL_QUEUE
+  	  SQUEUE_Init();
+	#endif
 #endif
 #if PL_CONFIG_HAS_MOTOR
 	MOT_Init();
+	#if PL_CONFIG_HAS_REFLECTANCE
+	REF_Init();
+	#endif
 #endif
 #if PL_CONFIG_HAS_SEMAPHORE
 	SEM_Init();
@@ -83,8 +95,9 @@ void PL_Init(void) {
 #if PL_CONFIG_HAS_SNAKE
 	SNAKE_Init();
 #endif
-
-
+#if PL_CONFIG_HAS_NVM
+	NVMC_Init();
+#endif
 }
 
 void PL_Deinit(void) {
@@ -115,9 +128,15 @@ void PL_Deinit(void) {
 #endif
 #if PL_CONFIG_HAS_SHELL
   SHELL_Deinit();
+#if PL_CONFIG_HAS_SHELL_QUEUE
+  	  SQUEUE_Deinit();
+	#endif
 #endif
 #if PL_CONFIG_HAS_MOTOR
 	MOT_Deinit();
+#if PL_CONFIG_HAS_REFLECTANCE
+	REF_Deinit();
+	#endif
 #endif
 #if PL_CONFIG_HAS_SEMAPHORE
 	SEM_Deinit();
@@ -127,5 +146,8 @@ void PL_Deinit(void) {
 #endif
 #if PL_CONFIG_HAS_SNAKE
 	SNAKE_Deinit();
+#endif
+#if PL_CONFIG_HAS_NVM
+	NVMC_Init();
 #endif
 }

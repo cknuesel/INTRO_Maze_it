@@ -106,6 +106,8 @@
 #include "IntFlashLdd1.h"
 #include "GI2C1.h"
 #include "I2C1.h"
+#include "KSDK1.h"
+#include "KIN1.h"
 
 #ifdef __cplusplus
 extern "C" {
