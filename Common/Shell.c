@@ -38,8 +38,12 @@
 #if PL_CONFIG_HAS_MCP4728
   #include "MCP4728.h"
 #endif
+#if PL_CONFIG_HAS_QUADRATURE
+  #include "Q4CLeft.h"
+  #include "Q4CRight.h"
+#endif
 #if PL_CONFIG_HAS_QUAD_CALIBRATION
-  #include "QUadCalib.h"
+  #include "QuadCalib.h"
 #endif
 #if PL_CONFIG_HAS_MOTOR_TACHO
   #include "Tacho.h"
@@ -53,6 +57,24 @@
 		#include "Drive.h"
 	#endif
 #endif
+#if PL_CONFIG_HAS_TURN
+  #include "Turn.h"
+#endif
+#if PL_CONFIG_HAS_LINE_FOLLOW
+  #include "LineFollow.h"
+#endif
+#if PL_CONFIG_HAS_RADIO
+  #include "RApp.h"
+  #include "RNet_App.h"
+  #include "RNetConf.h"
+#endif
+#if RNET_CONFIG_REMOTE_STDIO
+  #include "RStdIO.h"
+#endif
+#if PL_CONFIG_HAS_REMOTE
+  #include "Remote.h"
+#endif
+#include "KIN1.h"
 
 
 #define SHELL_COPY_CDC_TO_UART   (1)
@@ -86,6 +108,10 @@ static const CLS1_ParseCommandCallback CmdParserTable[] =
 #if PL_CONFIG_HAS_MCP4728
    MCP4728_ParseCommand,
 #endif
+#if PL_CONFIG_HAS_QUADRATURE
+  Q4CLeft_ParseCommand,
+  Q4CRight_ParseCommand,
+#endif
 #if PL_CONFIG_HAS_QUAD_CALIBRATION
    QUADCALIB_ParseCommand,
 #endif
@@ -100,6 +126,24 @@ static const CLS1_ParseCommandCallback CmdParserTable[] =
 	#if PL_CONFIG_HAS_DRIVE
   	  DRV_ParseCommand,
 	#endif
+#endif
+#if KIN1_PARSE_COMMAND_ENABLED
+  KIN1_ParseCommand,
+#endif
+#if PL_CONFIG_HAS_TURN
+  TURN_ParseCommand,
+#endif
+#if PL_CONFIG_HAS_LINE_FOLLOW
+  LF_ParseCommand,
+#endif
+#if PL_CONFIG_HAS_RADIO
+#if RNET1_PARSE_COMMAND_ENABLED
+  RNET1_ParseCommand,
+#endif
+  RNETA_ParseCommand,
+#endif
+#if PL_CONFIG_HAS_REMOTE
+  REMOTE_ParseCommand,
 #endif
   NULL /* Sentinel */
 };

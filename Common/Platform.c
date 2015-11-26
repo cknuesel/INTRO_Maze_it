@@ -33,6 +33,12 @@
 #endif
 #if PL_CONFIG_HAS_SHELL
   #include "Shell.h"
+  #if PL_CONFIG_HAS_SHELL_QUEUE
+  	#include "ShellQueue.h"
+  #endif
+#endif
+#if PL_HAS_CONFIG_SEMAPHORE
+  #include "Sem.h"
 #endif
 #if PL_CONFIG_HAS_MOTOR
 	#include "Motor.h"
@@ -55,8 +61,32 @@
 #if PL_CONFIG_HAS_NVM
 	#include "NVM_Config.h"
 #endif
+#if PL_CONFIG_HAS_MCP4728
+ #include "MCP4728.h"
+#endif
+#if PL_CONFIG_HAS_MOTOR_TACHO
+  #include "Tacho.h"
+#endif
 #if PL_CONFIG_HAS_ULTRASONIC
   #include "Ultrasonic.h"
+#endif
+#if PL_CONFIG_HAS_PID
+  #include "PID.h"
+#endif
+#if PL_CONFIG_HAS_DRIVE
+  #include "Drive.h"
+#endif
+#if PL_CONFIG_HAS_TURN
+  #include "Turn.h"
+#endif
+#if PL_CONFIG_HAS_LINE_FOLLOW
+  #include "LineFollow.h"
+#endif
+#if PL_CONFIG_HAS_RADIO
+  #include "RNet_App.h"
+#endif
+#if PL_CONFIG_HAS_REMOTE
+  #include "Remote.h"
 #endif
 
 
@@ -119,20 +149,32 @@ void PL_Init(void) {
 #if PL_CONFIG_HAS_ULTRASONIC
   US_Init();
 #endif
+#if PL_CONFIG_HAS_TURN
+  TURN_Init();
+#endif
+#if PL_CONFIG_HAS_LINE_FOLLOW
+  LF_Init();
+#endif
+#if PL_CONFIG_HAS_RADIO
+  RNETA_Init();
+#endif
+#if PL_CONFIG_HAS_REMOTE
+  REMOTE_Init();
+#endif
 }
 
 void PL_Deinit(void) {
-#if PL_CONFIG_HAS_RTOS
-  RTOS_Deinit();
+#if PL_CONFIG_HAS_REMOTE
+  REMOTE_Deinit();
 #endif
-#if PL_CONFIG_HAS_LED
-  LED_Deinit();
+#if PL_CONFIG_HAS_RADIO
+  RNETA_Deinit();
 #endif
-#if PL_CONFIG_HAS_EVENTS
-  EVNT_Deinit();
+#if PL_CONFIG_HAS_LINE_FOLLOW
+  LF_Deinit();
 #endif
-#if PL_CONFIG_HAS_TIMER
-  TMR_Deinit();
+#if PL_CONFIG_HAS_TURN
+  TURN_Deinit();
 #endif
 #if PL_CONFIG_HAS_KEYS
   KEY_Deinit();
@@ -174,8 +216,14 @@ void PL_Deinit(void) {
 #if PL_CONFIG_HAS_SNAKE
 	SNAKE_Deinit();
 #endif
-#if PL_CONFIG_HAS_NVM
-	NVMC_Init();
+#if PL_CONFIG_HAS_TIMER
+  TMR_Deinit();
+#endif
+#if PL_CONFIG_HAS_EVENTS
+  EVNT_Deinit();
+#endif
+#if PL_CONFIG_HAS_LED
+  LED_Deinit();
 #endif
 #if PL_CONFIG_HAS_ULTRASONIC
   US_Deinit();

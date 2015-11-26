@@ -157,7 +157,7 @@ static void REF_MeasureRaw(SensorTimeType raw[REF_NOF_SENSORS]) {
         cnt++;
       }
     }
-  } while(cnt!=REF_NOF_SENSORS && timerVal < 0xFFFFF);
+  } while(cnt!=REF_NOF_SENSORS && timerVal < 0x0800);
   LED_IR_Off(); /* IR LED's off */
 }
 
@@ -177,11 +177,16 @@ static void REF_CalibrateMinMax(SensorTimeType min[REF_NOF_SENSORS], SensorTimeT
 
 #if PL_CONFIG_HAS_NVM
   void REF_SaveCalib(void) {
-	  NVMC_SaveReflectanceData( &SensorCalibMinMax, (uint16_t)sizeof(SensorCalibT));
+	  if(NVMC_SaveReflectanceData(&SensorCalibMinMax, sizeof(SensorCalibMinMax)) == ERR_OK){
+	  		SHELL_SendString("Successfully saved ref calibration data!\r\n");
+	  	} else {
+	  		SHELL_SendString("Error occured trying to safe calibration data!\r\n");
+	  	}
   }
 
   void REF_RestorCalib(void) {
 	  SensorCalibMinMax = *((SensorCalibT*)NVMC_GetReflectanceData());
+	  	refState=REF_STATE_READY;
   }
 #endif
 
