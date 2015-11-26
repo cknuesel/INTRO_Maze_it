@@ -150,6 +150,9 @@ void FRTOS1_vApplicationTickHook(void)
 #if PL_CONFIG_HAS_RTOS && PL_CONFIG_HAS_TIMER
 	TMR_OnInterrupt();
 #endif
+#if PL_CONFIG_HAS_MOTOR_TACHO
+	TACHO_Sample();
+#endif
 }
 
 /*
@@ -212,6 +215,8 @@ void FRTOS1_vApplicationMallocFailedHook(void)
 void QuadInt_OnInterrupt(void)
 {
   /* Write your code here ... */
+	Q4CLeft_Sample();
+	Q4CRight_Sample();
 }
 
 /*
@@ -270,6 +275,9 @@ void GI2C1_OnReleaseBus(void)
 void TU_US_OnCounterRestart(LDD_TUserData *UserDataPtr)
 {
   /* Write your code here ... */
+#if PL_CONFIG_HAS_ULTRASONIC
+	US_EventEchoOverflow(UserDataPtr);
+#endif
 }
 
 /*
@@ -294,6 +302,9 @@ void TU_US_OnCounterRestart(LDD_TUserData *UserDataPtr)
 void TU_US_OnChannel0(LDD_TUserData *UserDataPtr)
 {
   /* Write your code here ... */
+#if PL_CONFIG_HAS_ULTRASONIC
+	US_EventEchoCapture(UserDataPtr);
+#endif
 }
 
 /* END Events */

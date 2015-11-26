@@ -41,6 +41,19 @@
 #if PL_CONFIG_HAS_QUAD_CALIBRATION
   #include "QUadCalib.h"
 #endif
+#if PL_CONFIG_HAS_MOTOR_TACHO
+  #include "Tacho.h"
+#endif
+#if PL_CONFIG_HAS_ULTRASONIC
+  #include "Ultrasonic.h"
+#endif
+#if PL_CONFIG_HAS_PID
+  #include "Pid.h"
+	#if PL_CONFIG_HAS_DRIVE
+		#include "Drive.h"
+	#endif
+#endif
+
 
 #define SHELL_COPY_CDC_TO_UART   (1)
 
@@ -75,6 +88,18 @@ static const CLS1_ParseCommandCallback CmdParserTable[] =
 #endif
 #if PL_CONFIG_HAS_QUAD_CALIBRATION
    QUADCALIB_ParseCommand,
+#endif
+#if PL_CONFIG_HAS_MOTOR_TACHO
+  TACHO_ParseCommand,
+#endif
+#if PL_CONFIG_HAS_ULTRASONIC
+  US_ParseCommand,
+#endif
+#if PL_CONFIG_HAS_PID
+  PID_ParseCommand,
+	#if PL_CONFIG_HAS_DRIVE
+  	  DRV_ParseCommand,
+	#endif
 #endif
   NULL /* Sentinel */
 };

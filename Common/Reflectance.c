@@ -157,7 +157,7 @@ static void REF_MeasureRaw(SensorTimeType raw[REF_NOF_SENSORS]) {
         cnt++;
       }
     }
-  } while(cnt!=REF_NOF_SENSORS);
+  } while(cnt!=REF_NOF_SENSORS && timerVal < 0xFFFFF);
   LED_IR_Off(); /* IR LED's off */
 }
 
@@ -173,10 +173,18 @@ static void REF_CalibrateMinMax(SensorTimeType min[REF_NOF_SENSORS], SensorTimeT
       max[i] = raw[i];
     }
   }
-/*#if PL_CONFIG_HAS_NVM
-  NVMC_SaveReflectanceData( &SensorCalibMinMax, sizeof(SensorCalibT));
-#endif*/
 }
+
+#if PL_CONFIG_HAS_NVM
+  void REF_SaveCalib(void) {
+	  NVMC_SaveReflectanceData( &SensorCalibMinMax, (uint16_t)sizeof(SensorCalibT));
+  }
+
+  void REF_RestorCalib(void) {
+	  SensorCalibMinMax = *((SensorCalibT*)NVMC_GetReflectanceData());
+  }
+#endif
+
 
 
 
@@ -265,6 +273,9 @@ static uint8_t PrintHelp(const CLS1_StdIOType *io) {
   CLS1_SendHelpStr((unsigned char*)"  help|status", (unsigned char*)"Print help or status information\r\n", io->stdOut);
 #if REF_START_STOP_CALIB
   CLS1_SendHelpStr((unsigned char*)"  calib (start|stop)", (unsigned char*)"Start/Stop calibrating while moving sensor over line\r\n", io->stdOut);
+#endif
+#if PL_CONFIG_HAS_NVM
+  CLS1_SendHelpStr((unsigned char*)"  calib (save|restore)", (unsigned char*)"Save/Restor calibration data into/from flash\r\n", io->stdOut);
 #endif
   return ERR_OK;
 }
@@ -377,6 +388,24 @@ byte REF_ParseCommand(const unsigned char *cmd, bool *handled, const CLS1_StdIOT
     }
     *handled = TRUE;
     return ERR_OK;
+#endif
+#if PL_CONFIG_HAS_NVM
+  } else if (UTIL1_strcmp((char*)cmd, "ref calib save")==0) {
+      if(refState == REF_STATE_READY){
+    	  REF_SaveCalib();
+      } else { CLS1_SendStr((unsigned char*)"ERROR: not calibrated yet\r\n", io->stdErr);
+      return ERR_FAILED;
+    }
+    *handled = TRUE;
+    return ERR_OK;
+  } else if (UTIL1_strcmp((char*)cmd, "ref calib restore")==0) {
+	  if(refState == REF_STATE_NOT_CALIBRATED){
+	      REF_RestorCalib();
+	  } else { CLS1_SendStr((unsigned char*)"ERROR: calibrated yet\r\n", io->stdErr);
+	  return ERR_FAILED;
+	}
+	*handled = TRUE;
+	return ERR_OK;
 #endif
   }
   return ERR_OK;

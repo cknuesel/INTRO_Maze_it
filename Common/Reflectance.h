@@ -30,6 +30,12 @@
   #define REF_PARSE_COMMAND_ENABLED 0
 #endif
 
+#if PL_CONFIG_HAS_NVM
+  void REF_SaveCalib(void);
+
+  void REF_RestorCalib(void);
+#endif
+
 /*!
  * \brief Starts or stops the calibration.
  */
