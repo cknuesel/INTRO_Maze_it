@@ -88,6 +88,9 @@
 #if PL_CONFIG_HAS_REMOTE
   #include "Remote.h"
 #endif
+#if PL_CONFIG_HAS_IDENTIFY
+  #include "Identify.h"
+#endif
 
 
 void PL_Init(void) {
@@ -124,6 +127,9 @@ void PL_Init(void) {
 #endif
 #if PL_CONFIG_HAS_MOTOR
 	MOT_Init();
+	#if PL_CONFIG_HAS_MCP4728
+ 	 MCP4728_Init();
+	#endif
 	#if PL_CONFIG_HAS_MOTOR_TACHO
 		TACHO_Init();
 	#endif
@@ -161,6 +167,9 @@ void PL_Init(void) {
 #if PL_CONFIG_HAS_REMOTE
   REMOTE_Init();
 #endif
+#if PL_CONFIG_HAS_IDENTIFY
+  ID_Init();
+#endif
 }
 
 void PL_Deinit(void) {
@@ -197,6 +206,9 @@ void PL_Deinit(void) {
 #endif
 #if PL_CONFIG_HAS_MOTOR
 	MOT_Deinit();
+	#if PL_CONFIG_HAS_MCP4728
+ 	 MCP4728_Deinit();
+	#endif
 	#if PL_CONFIG_HAS_PID
 	  PID_Deinit();
 	#endif
@@ -227,5 +239,8 @@ void PL_Deinit(void) {
 #endif
 #if PL_CONFIG_HAS_ULTRASONIC
   US_Deinit();
+#endif
+#if PL_CONFIG_HAS_IDENTIFY
+  ID_Deinit();
 #endif
 }

@@ -21,6 +21,10 @@
 #if PL_CONFIG_HAS_MCP4728_LDAC
   #include "MCP4728_LDAC.h"
 #endif
+#if PL_CONFIG_HAS_IDENTIFY
+  #include "Identify.h"
+#endif
+
 
 #define MCP4728_CPU_IS_LITTLE_ENDIAN 1 /* Cpu is little endian */
 
@@ -30,11 +34,16 @@
 #define MCP4728_GC_WAKEUP           0x09 /* general call wake-up command */
 #define MCP4728_GC_READ             0x0C /* general call read address bits command */
 
-#if MCP4728_I2C_ADDR
-#define MCP4728_I2C_ADDRESS 0x61 /* default address of device (4728A1), for lab Zumo */
-#else
-#define MCP4728_I2C_ADDRESS 0x60 /* default address of device (4728A1), for lab Zumo */
+
+#define MCP4728_I2C_ADDRESS_DEFAULT 0x61 /* default address of device (4728A1), for lab Zumo */
+
+#if PL_CONFIG_HAS_IDENTIFY
+  static uint8_t MCP4728_I2C_ADDRESS = MCP4728_I2C_ADDRESS_DEFAULT; /* use variable address */
+#else /* use constant define */
+  #define MCP4728_I2C_ADDRESS MCP4728_I2C_ADDRESS_DEFAULT /* default address of device (4728A1) for new/production Zumo */
+  //  #define MCP4728_I2C_ADDRESS 0x60 /* default address of device (4728UN) for prototype Zumo V2 */
 #endif
+
 
 bool MCP4728_IsBusy(void) {
 #if PL_CONFIG_HAS_MCP4728_RDY
@@ -198,13 +207,6 @@ uint8_t MCP4728_Read(uint8_t buf[3*8], size_t bufSize) {
   return ERR_OK;
 }
 
-void MCP4728_Deinit(void) {
-  /* nothing */
-}
-
-void MCP4728_Init(void) {
-  /* nothing */
-}
 
 static void DecodeChannelDACInputRegister(uint8_t *info, uint8_t data[3], const CLS1_StdIOType *io) {
   uint8_t buf[16];
@@ -366,4 +368,28 @@ byte MCP4728_ParseCommand(const unsigned char *cmd, bool *handled, const CLS1_St
   }
   return ERR_OK;
 }
+
+void MCP4728_Deinit(void) {
+  /* nothing */
+}
+
+void MCP4728_Init(void) {
+#if PL_CONFIG_HAS_IDENTIFY
+  ID_Robots robo;
+
+  robo = ID_WhichRobot();
+  switch(robo) {
+  case ID_ROBO_MANU:
+    MCP4728_I2C_ADDRESS = 0x61;
+    break;
+  case ID_ROBO_CYRILL:
+    MCP4728_I2C_ADDRESS = 0x60;
+    break;
+  default:
+    MCP4728_I2C_ADDRESS = MCP4728_I2C_ADDRESS_DEFAULT;
+    break;
+  }
+#endif
+}
+
 #endif /* PL_CONFIG_HAS_MCP4728 */

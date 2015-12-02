@@ -74,7 +74,9 @@
 #if PL_CONFIG_HAS_REMOTE
   #include "Remote.h"
 #endif
-#include "KIN1.h"
+#if !defined(PL_CONFIG_BOARD_IS_FRDM)
+	#include "KIN1.h"
+#endif
 
 
 #define SHELL_COPY_CDC_TO_UART   (1)
