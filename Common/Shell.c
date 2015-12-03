@@ -150,6 +150,10 @@ static const CLS1_ParseCommandCallback CmdParserTable[] =
   NULL /* Sentinel */
 };
 
+void SHELL_ParseCmd(unsigned char *cmd) {
+  (void)CLS1_ParseWithCommandTable(cmd, CLS1_GetStdio(), CmdParserTable);
+}
+
 static uint32_t SHELL_val; /* used as demo value for shell */
 
 void SHELL_SendString(unsigned char *msg) {
@@ -280,7 +284,11 @@ static void ShellTask(void *pvParameters) {
   static unsigned char rtt_buf[48];
 #endif
 #if CLS1_DEFAULT_SERIAL
-  CLS1_ConstStdIOTypePtr ioLocal = CLS1_GetStdio();
+  CLS1_ConstStdIOTypePtr ioLocal = CLS1_GetStdio();  
+#endif
+#if PL_CONFIG_HAS_RADIO && RNET_CONFIG_REMOTE_STDIO
+  static unsigned char radio_cmd_buf[48];
+  CLS1_ConstStdIOType *ioRemote = RSTDIO_GetStdioRx();
 #endif
 
   (void)pvParameters; /* not used */
@@ -296,6 +304,9 @@ static void ShellTask(void *pvParameters) {
   localConsole_buf[0] = '\0';
 #if CLS1_DEFAULT_SERIAL
   (void)CLS1_ParseWithCommandTable((unsigned char*)CLS1_CMD_HELP, ioLocal, CmdParserTable);
+#endif
+#if PL_CONFIG_HAS_RADIO && RNET_CONFIG_REMOTE_STDIO
+  radio_cmd_buf[0] = '\0';
 #endif
   for(;;) {
 #if CLS1_DEFAULT_SERIAL
@@ -313,6 +324,10 @@ static void ShellTask(void *pvParameters) {
 #endif
 #if PL_CONFIG_HAS_SEGGER_RTT
     (void)CLS1_ReadAndParseWithCommandTable(rtt_buf, sizeof(rtt_buf), &RTT_Stdio, CmdParserTable);
+#endif
+#if PL_CONFIG_HAS_RADIO && RNET_CONFIG_REMOTE_STDIO
+    RSTDIO_Print(ioLocal); /* dispatch incoming messages */
+    (void)CLS1_ReadAndParseWithCommandTable(radio_cmd_buf, sizeof(radio_cmd_buf), ioRemote, CmdParserTable);
 #endif
 #if PL_CONFIG_HAS_SHELL_QUEUE
 #if PL_CONFIG_HAS_SQUEUE_SINGLE_CHAR

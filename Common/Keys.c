@@ -18,6 +18,12 @@
 #if PL_CONFIG_HAS_MOTOR
   #include "Motor.h"
 #endif
+#if PL_CONFIG_HAS_DRIVE
+  #include "Drive.h"
+#endif
+#if PL_CONFIG_HAS_LINE_FOLLOW
+  #include "LineFollow.h"
+#endif
 
 void KEY_Scan(void) {
   /*! \todo check handling all keys */
@@ -438,9 +444,11 @@ void KEY_Deinit(void) {
 	   #endif
 
 	  #if PL_CONFIG_NOF_KEYS >= 4	/* D */
+	   case EVNT_SW4_PRESSED:
 		#if !PL_CONFIG_EVENTS_AUTO_CLEAR
 		  EVNT_ClearEvent(EVNT_SW4_PRESSED);
 		#endif
+		  CLS1_SendStr("\r\n", CLS1_GetStdio()->stdOut);
 		  break;
 
 		case EVNT_SW4_LPRESSED:

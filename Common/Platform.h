@@ -9,9 +9,6 @@
 #define SOURCES_COMMON_PLATFORM_H_
 
 #include "Platform_Local.h"
-#if PL_CONFIG_BOARD_IS_ROBO
-#include "Platform_Local_Version.h"
-#endif
 #include "PE_Types.h" /* common Processor Expert types: bool, NULL, ... */
 
 
@@ -27,7 +24,6 @@
 	#define PL_CONFIG_HAS_DEBOUNCE          (1 && PL_CONFIG_HAS_KEYS)
 	#define PL_CONFIG_HAS_KBI               (0 && !defined(PL_CONFIG_DISABLE_HAS_KBI) && PL_CONFIG_HAS_KEYS && defined(PL_CONFIG_BOARD_IS_ROBO))
 #define PL_CONFIG_HAS_JOYSTICK          (1 && PL_CONFIG_HAS_KEYS && defined(PL_CONFIG_BOARD_IS_FRDM))
-	#define PL_CONFIG_HAS_REMOTE            (1 && PL_CONFIG_HAS_JOYSTICK)
 #define PL_CONFIG_HAS_BUZZER            (1 && !defined(PL_CONFIG_DISABLE_HAS_BUZZER) && defined(PL_CONFIG_BOARD_IS_ROBO))
 #define PL_CONFIG_HAS_MOTOR				(1 && !defined(PL_CONFIG_DISABLE_HAS_MOTOR)&& defined(PL_CONFIG_BOARD_IS_ROBO))
 	#define PL_CONFIG_HAS_MOTOR_TACHO		(1 && PL_CONFIG_HAS_MOTOR)
@@ -68,6 +64,7 @@
 #if defined(PL_CONFIG_BOARD_IS_ROBO)
 	#define PL_CONFIG_HAS_RADIO        		(1)
 #endif
+#define PL_CONFIG_HAS_REMOTE            (1 && PL_CONFIG_HAS_RADIO)
 #define PL_APP_CONTROL_SENDER           (1 && PL_CONFIG_HAS_JOYSTICK && defined(PL_CONFIG_BOARD_IS_FRDM))
 
 
