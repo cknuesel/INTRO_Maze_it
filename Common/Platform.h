@@ -65,7 +65,7 @@
 	#define PL_CONFIG_HAS_RADIO        		(1)
 #endif
 #define PL_CONFIG_HAS_REMOTE            (1 && PL_CONFIG_HAS_RADIO)
-#define PL_APP_CONTROL_SENDER           (1 && PL_CONFIG_HAS_JOYSTICK && defined(PL_CONFIG_BOARD_IS_FRDM))
+#define PL_CONFIG_CONTROL_SENDER           (1 && PL_CONFIG_HAS_JOYSTICK && defined(PL_CONFIG_BOARD_IS_FRDM))
 
 
 

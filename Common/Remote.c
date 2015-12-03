@@ -31,6 +31,9 @@
 #if PL_CONFIG_HAS_JOYSTICK
   #include "AD1.h"
 #endif
+#if PL_CONFIG_HAS_SHELL
+  #include "Shell.h"
+#endif
 
 static bool REMOTE_isOn = FALSE;
 static bool REMOTE_isVerbose = FALSE;
@@ -39,7 +42,7 @@ static bool REMOTE_useJoystick = TRUE;
 static uint16_t midPointX, midPointY;
 #endif
 
-#if PL_APP_CONTROL_SENDER
+#if PL_CONFIG_CONTROL_SENDER
 static int8_t ToSigned8Bit(uint16_t val, bool isX) {
   int32_t tmp;
 
@@ -95,7 +98,7 @@ static void RemoteTask (void *pvParameters) {
 #if PL_CONFIG_HAS_JOYSTICK
   (void)APP_GetXY(&midPointX, &midPointY, NULL, NULL);
 #endif
-  FRTOS1_vTaskDelay(1000/portTICK_RATE_MS);
+  FRTOS1_vTaskDelay(1000/portTICK_PERIOD_MS);
   for(;;) {
     if (REMOTE_isOn) {
 #if PL_CONFIG_HAS_JOYSTICK
@@ -128,9 +131,9 @@ static void RemoteTask (void *pvParameters) {
         LED1_Neg();
       }
 #endif
-      FRTOS1_vTaskDelay(200/portTICK_RATE_MS);
+      FRTOS1_vTaskDelay(200/portTICK_PERIOD_MS);
     } else {
-      FRTOS1_vTaskDelay(1000/portTICK_RATE_MS);
+      FRTOS1_vTaskDelay(1000/portTICK_PERIOD_MS);
     }
   } /* for */
 }
@@ -225,6 +228,7 @@ uint8_t REMOTE_HandleRemoteRxMessage(RAPP_MSG_Type type, uint8_t size, uint8_t *
 #if PL_CONFIG_HAS_SHELL
   uint8_t buf[48];
 #endif
+  uint8_t val;
   int16_t x, y, z;
 
   (void)size;
@@ -270,6 +274,29 @@ uint8_t REMOTE_HandleRemoteRxMessage(RAPP_MSG_Type type, uint8_t size, uint8_t *
       }
       break;
 #endif
+    case RAPP_MSG_TYPE_JOYSTICK_BTN:
+      *handled = TRUE;
+      val = *data; /* get data value */
+#if PL_CONFIG_HAS_SHELL && PL_CONFIG_HAS_BUZZER && PL_CONFIG_HAS_REMOTE
+      if (val=='F') { /* F button, disable remote */
+        SHELL_ParseCmd((unsigned char*)"buzzer buz 300 500");
+        REMOTE_SetOnOff(FALSE);
+        DRV_SetSpeed(0,0); /* turn off motors */
+        SHELL_SendString("Remote OFF\r\n");
+      } else if (val=='G') { /* center joystick button: enable remote */
+        SHELL_ParseCmd((unsigned char*)"buzzer buz 300 1000");
+        REMOTE_SetOnOff(TRUE);
+        DRV_SetMode(DRV_MODE_SPEED);
+        SHELL_SendString("Remote ON\r\n");
+      } else if (val=='C') { /* red 'C' button */
+        /*! \todo add functionality */
+      } else if (val=='A') { /* green 'A' button */
+        /*! \todo add functionality */
+      }
+#else
+      *handled = FALSE; /* no shell and no buzzer? */
+#endif
+      break;
 
     default:
       break;
@@ -372,7 +399,7 @@ void REMOTE_Init(void) {
   REMOTE_isOn = TRUE;
   REMOTE_isVerbose = FALSE;
   REMOTE_useJoystick = TRUE;
-#if PL_APP_CONTROL_SENDER
+#if PL_CONFIG_CONTROL_SENDER
   if (FRTOS1_xTaskCreate(RemoteTask, "Remote", configMINIMAL_STACK_SIZE+50, NULL, tskIDLE_PRIORITY, NULL) != pdPASS) {
     for(;;){} /* error */
   }

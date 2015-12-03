@@ -1,8 +1,7 @@
 /*
  * RNet_App.c
  *
- *  Created on: 26.11.2015
- *      Author: Cyrill
+ * This module implements the application part of the program.
  */
 
 #include "Platform.h"
@@ -24,7 +23,7 @@
   #include "Remote.h"
 #endif
 
-static RNWK_ShortAddrType APP_dstAddr = RNWK_ADDR_BROADCAST; /* destination node address */
+static RNWK_ShortAddrType APP_dstAddr = 0xD; /* destination node address */
 
 typedef enum {
   RNETA_NONE,
@@ -88,9 +87,9 @@ static void RadioPowerUp(void) {
   portTickType xTime;
 
   xTime = FRTOS1_xTaskGetTickCount();
-  if (xTime<(100/portTICK_RATE_MS)) {
+  if (xTime<(100/portTICK_PERIOD_MS)) {
     /* not powered for 100 ms: wait until we can access the radio transceiver */
-    xTime = (100/portTICK_RATE_MS)-xTime; /* remaining ticks to wait */
+    xTime = (100/portTICK_PERIOD_MS)-xTime; /* remaining ticks to wait */
     FRTOS1_vTaskDelay(xTime);
   }
   (void)RNET1_PowerUp();
@@ -131,7 +130,7 @@ static void RadioTask(void *pvParameters) {
   appState = RNETA_NONE; /* set state machine state */
   for(;;) {
     Process(); /* process state machine and radio in/out queues */
-    FRTOS1_vTaskDelay(2/portTICK_RATE_MS);
+    FRTOS1_vTaskDelay(2/portTICK_PERIOD_MS);
   }
 }
 
