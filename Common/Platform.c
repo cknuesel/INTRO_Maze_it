@@ -91,6 +91,9 @@
 #if PL_CONFIG_HAS_IDENTIFY
   #include "Identify.h"
 #endif
+#if PL_CONFIG_HAS_LINE_MAZE
+  #include "Maze.h"
+#endif
 
 
 void PL_Init(void) {
@@ -170,6 +173,9 @@ void PL_Init(void) {
 #if PL_CONFIG_HAS_IDENTIFY
   ID_Init();
 #endif
+#if PL_CONFIG_HAS_LINE_MAZE
+  MAZE_Init();
+#endif
 }
 
 void PL_Deinit(void) {
@@ -242,5 +248,8 @@ void PL_Deinit(void) {
 #endif
 #if PL_CONFIG_HAS_IDENTIFY
   ID_Deinit();
+#endif
+#if PL_CONFIG_HAS_LINE_MAZE
+  MAZE_Deinit();
 #endif
 }

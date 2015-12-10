@@ -23,7 +23,11 @@
   #include "Remote.h"
 #endif
 
-static RNWK_ShortAddrType APP_dstAddr = 0xD; /* destination node address */
+#if defined(PL_CONFIG_BOARD_IS_ROBO)
+	static RNWK_ShortAddrType APP_dstAddr = 0xD1; /* destination node address */
+#else
+	static RNWK_ShortAddrType APP_dstAddr = 0xD; /* destination node address */
+#endif
 
 typedef enum {
   RNETA_NONE,

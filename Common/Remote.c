@@ -228,7 +228,7 @@ uint8_t REMOTE_HandleRemoteRxMessage(RAPP_MSG_Type type, uint8_t size, uint8_t *
 #if PL_CONFIG_HAS_SHELL
   uint8_t buf[48];
 #endif
-  uint8_t val;
+  uint16_t val;
   int16_t x, y, z;
 
   (void)size;
@@ -278,6 +278,56 @@ uint8_t REMOTE_HandleRemoteRxMessage(RAPP_MSG_Type type, uint8_t size, uint8_t *
       *handled = TRUE;
       val = *data; /* get data value */
 #if PL_CONFIG_HAS_SHELL && PL_CONFIG_HAS_BUZZER && PL_CONFIG_HAS_REMOTE
+    switch(val) {
+    case 'A':
+    	break;
+    case 'AL':
+    	break;
+    case 'AR':
+    	break;
+    case 'B':
+    	SHELL_ParseCmd((unsigned char*)"buzzer buz 300 500");
+        break;
+    case 'BL':
+    	SHELL_ParseCmd((unsigned char*)"buzzer play tune");
+       	break;
+    case 'BR':
+       	break;
+    case 'C':
+        break;
+    case 'CL':
+       	break;
+    case 'CR':
+     	break;
+    case 'D':
+       	break;
+    case 'DL':
+    	break;
+    case 'DR':
+       	break;
+    case 'E':
+        break;
+    case 'EL':
+       	break;
+    case 'ER':
+       	break;
+    case 'F':
+        break;
+    case 'FL':
+       	break;
+    case 'FR':
+    	break;
+    case 'G':
+        break;
+    case 'GL':
+      	break;
+    case 'GR':
+       	break;
+    default:
+    	SHELL_ParseCmd((unsigned char*)"buzzer buz 300 500");
+    	break;
+    }
+
       if (val=='F') { /* F button, disable remote */
         SHELL_ParseCmd((unsigned char*)"buzzer buz 300 500");
         REMOTE_SetOnOff(FALSE);

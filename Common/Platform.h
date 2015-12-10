@@ -46,7 +46,7 @@
 #define PL_CONFIG_HAS_TURN              (1 && PL_CONFIG_HAS_DRIVE)
 #define PL_CONFIG_HAS_IDENTIFY			(1 && defined(PL_CONFIG_BOARD_IS_ROBO))
 
-#define PL_CONFIG_APP_LINE_MAZE         (0)
+#define PL_CONFIG_HAS_LINE_MAZE         (1 && defined(PL_CONFIG_BOARD_IS_ROBO))
 
 
 /* OS */

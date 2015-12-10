@@ -15,15 +15,14 @@
 #if PL_CONFIG_HAS_EVENTS
   #include "Event.h"
 #endif
-#if PL_CONFIG_HAS_MOTOR
-  #include "Motor.h"
+#if PL_CONFIG_HAS_REFLECTANCE
+  #include "Reflectance.h"
 #endif
-#if PL_CONFIG_HAS_DRIVE
-  #include "Drive.h"
+#if PL_CONFIG_HAS_RADIO
+	#include "Remote.h"
 #endif
-#if PL_CONFIG_HAS_LINE_FOLLOW
-  #include "LineFollow.h"
-#endif
+
+
 
 void KEY_Scan(void) {
   /*! \todo check handling all keys */
@@ -362,85 +361,110 @@ void KEY_Deinit(void) {
 
 #else /* default Key Event Handler */
 	void APP_KeyEvntHandler(EVNT_Handle event) {
+	uint16_t keydata;
 	  switch(event) {
 	  #if PL_CONFIG_NOF_KEYS >= 1	/* A */
 		case EVNT_SW1_PRESSED:
 			#if !PL_CONFIG_EVENTS_AUTO_CLEAR
 			  EVNT_ClearEvent(EVNT_SW1_PRESSED);
 			#endif
-			#if PL_CONFIG_NOF_LED >= 3
-			LED3_Neg();
-			#endif
-			CLS1_SendStr("Bl pressed\r\n", CLS1_GetStdio()->stdOut);
 			#if PL_CONFIG_HAS_LCD
 			PDC1_WriteLineStr(1,"Hello World");
 			#endif
-			#if PL_CONFIG_HAS_MOTOR
-				MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_LEFT), 0);
-				MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_RIGHT), 0);
+			#if (PL_CONFIG_HAS_REFLECTANCE && PL_CONFIG_HAS_NVM)
+			REF_RestorCalib();
+			#else
+				#if PL_CONFIG_HAS_RADIO
+					keydata = 'A';
+					RAPP_SendPayloadDataBlock(keydata, sizeof(keydata), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+				#endif
 			#endif
 			break;
+
 		case EVNT_SW1_LPRESSED:
 			#if !PL_CONFIG_EVENTS_AUTO_CLEAR
 			  EVNT_ClearEvent(EVNT_SW1_LPRESSED);
 			#endif
-			CLS1_SendStr("Blauuuuuuuuuuuuuuuu\r\n", CLS1_GetStdio()->stdOut);
-			#if PL_CONFIG_HAS_MOTOR
-			  MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_LEFT), 30);
-			  MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_RIGHT), -30);
+			#if PL_CONFIG_HAS_RADIO
+			  	 keydata = 'AL';
+			  	 RAPP_SendPayloadDataBlock(keydata, sizeof(keydata), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			#endif
+			#if defined(PL_CONFIG_BOARD_IS_ROBO)
+			  REF_CalibrateStartStop();
 			#endif
 			break;
+
 		case EVNT_SW1_RELEASED:
 			#if !PL_CONFIG_EVENTS_AUTO_CLEAR
 			  EVNT_ClearEvent(EVNT_SW1_RELEASED);
 			#endif
-			CLS1_SendStr("Bl released\r\n", CLS1_GetStdio()->stdOut);
-		  #if PL_CONFIG_HAS_BUZZER
-			  BUZ_Beep(300,500);
-		  #endif
-		  break;
+			#if PL_CONFIG_HAS_RADIO
+			  keydata = 'AR';
+			  RAPP_SendPayloadDataBlock(keydata, sizeof(keydata), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			#endif
 	   #endif
+
+
 	  #if PL_CONFIG_NOF_KEYS >= 2	/* B */
 		case EVNT_SW2_PRESSED:
-		#if !PL_CONFIG_EVENTS_AUTO_CLEAR
-		  EVNT_ClearEvent(EVNT_SW2_PRESSED);
-		#endif
+			#if !PL_CONFIG_EVENTS_AUTO_CLEAR
+			  EVNT_ClearEvent(EVNT_SW2_PRESSED);
+			#endif
+			#if PL_CONFIG_HAS_RADIO
+			 keydata = 'B';
+			  RAPP_SendPayloadDataBlock(keydata, sizeof(keydata), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			#endif
 
 		case EVNT_SW2_LPRESSED:
 		    #if !PL_CONFIG_EVENTS_AUTO_CLEAR
 		      EVNT_ClearEvent(EVNT_SW2_LPRESSED);
-		    #endif
+			#endif
+			#if PL_CONFIG_HAS_RADIO
+		      keydata = 'BL';
+		      RAPP_SendPayloadDataBlock(keydata, sizeof(keydata), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			#endif
 		      break;
 
 		case EVNT_SW2_RELEASED:
 		   #if !PL_CONFIG_EVENTS_AUTO_CLEAR
 		      EVNT_ClearEvent(EVNT_SW2_RELEASED);
 		   #endif
-		  LED1_Neg();
-		  CLS1_SendStr("Rot\r\n", CLS1_GetStdio()->stdOut);
+			#if PL_CONFIG_HAS_RADIO
+			 keydata = 'BR';
+			  RAPP_SendPayloadDataBlock(keydata, sizeof(keydata), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			#endif
 		  break;
 	   #endif
+
 
 	  #if PL_CONFIG_NOF_KEYS >= 3	/* C */
 		#if !PL_CONFIG_EVENTS_AUTO_CLEAR
 		  EVNT_ClearEvent(EVNT_SW3_PRESSED);
 		#endif
-		  break;
+		#if PL_CONFIG_HAS_RADIO
+		  keydata = 'C';
+		  RAPP_SendPayloadDataBlock(keydata, sizeof(keydata), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+		#endif
+		break;
 
 	   case EVNT_SW3_LPRESSED:
 		#if !PL_CONFIG_EVENTS_AUTO_CLEAR
 		  EVNT_ClearEvent(EVNT_SW3_LPRESSED);
 		#endif
+			#if PL_CONFIG_HAS_RADIO
+			 keydata = 'CL';
+			  RAPP_SendPayloadDataBlock(keydata, sizeof(keydata), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			#endif
 		  break;
 
 	   case EVNT_SW3_RELEASED:
 		#if !PL_CONFIG_EVENTS_AUTO_CLEAR
 		  EVNT_ClearEvent(EVNT_SW3_RELEASED);
 		#endif
-		  LED1_Neg();
-		  LED2_Neg();
-		  CLS1_SendStr("Gelb\r\n", CLS1_GetStdio()->stdOut);
-		  break;
+			#if PL_CONFIG_HAS_RADIO
+			 keydata = 'CR';
+			  RAPP_SendPayloadDataBlock(keydata, sizeof(keydata), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			#endif
 	   #endif
 
 	  #if PL_CONFIG_NOF_KEYS >= 4	/* D */
@@ -448,21 +472,30 @@ void KEY_Deinit(void) {
 		#if !PL_CONFIG_EVENTS_AUTO_CLEAR
 		  EVNT_ClearEvent(EVNT_SW4_PRESSED);
 		#endif
-		  CLS1_SendStr("\r\n", CLS1_GetStdio()->stdOut);
+			#if PL_CONFIG_HAS_RADIO
+			 keydata = 'D';
+			  RAPP_SendPayloadDataBlock(keydata, sizeof(keydata), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			#endif
 		  break;
 
 		case EVNT_SW4_LPRESSED:
 		#if !PL_CONFIG_EVENTS_AUTO_CLEAR
 		  EVNT_ClearEvent(EVNT_SW4_LPRESSED);
 		#endif
+			#if PL_CONFIG_HAS_RADIO
+			 	 keydata = 'DL';
+			 	 RAPP_SendPayloadDataBlock(keydata, sizeof(keydata), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			#endif
 		  break;
 
 		case EVNT_SW4_RELEASED:
 		#if !PL_CONFIG_EVENTS_AUTO_CLEAR
 		  EVNT_ClearEvent(EVNT_SW4_RELEASED);
 		#endif
-			CLS1_SendStr("Grün\r\n", CLS1_GetStdio()->stdOut);
-		  LED2_Neg();
+			#if PL_CONFIG_HAS_RADIO
+			 	 keydata = 'DR';
+			 	 RAPP_SendPayloadDataBlock(keydata, sizeof(keydata), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			#endif
 		  break;
 	   #endif
 
@@ -471,19 +504,30 @@ void KEY_Deinit(void) {
 		#if !PL_CONFIG_EVENTS_AUTO_CLEAR
 			EVNT_ClearEvent(EVNT_SW5_PRESSED);
 		#endif
-			LED1_Neg();
+			#if PL_CONFIG_HAS_RADIO
+			 keydata = 'E';
+			  RAPP_SendPayloadDataBlock(keydata, sizeof(keydata), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			#endif
 			break;
 
 		case EVNT_SW5_LPRESSED:
 		#if !PL_CONFIG_EVENTS_AUTO_CLEAR
 		  EVNT_ClearEvent(EVNT_SW5_LPRESSED);
 		#endif
+			#if PL_CONFIG_HAS_RADIO
+			 keydata = 'EL';
+			  RAPP_SendPayloadDataBlock(keydata, sizeof(keydata), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			#endif
 		  break;
 
 		case EVNT_SW5_RELEASED:
 		#if !PL_CONFIG_EVENTS_AUTO_CLEAR
 		  EVNT_ClearEvent(EVNT_SW5_RELEASED);
 		#endif
+			#if PL_CONFIG_HAS_RADIO
+			 keydata = 'ER';
+			  RAPP_SendPayloadDataBlock(keydata, sizeof(keydata), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			#endif
 		  break;
 	   #endif
 
@@ -492,19 +536,30 @@ void KEY_Deinit(void) {
 		#if !PL_CONFIG_EVENTS_AUTO_CLEAR
 		  EVNT_ClearEvent(EVNT_SW6_PRESSED);
 		#endif
-			LED2_Neg();
+			#if PL_CONFIG_HAS_RADIO
+			 keydata = 'F';
+			  RAPP_SendPayloadDataBlock(keydata, sizeof(keydata), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			#endif
 		  break;
 
 		case EVNT_SW6_LPRESSED:
 		#if !PL_CONFIG_EVENTS_AUTO_CLEAR
 		  EVNT_ClearEvent(EVNT_SW6_LPRESSED);
 		#endif
+			#if PL_CONFIG_HAS_RADIO
+			 keydata = 'FL';
+			  RAPP_SendPayloadDataBlock(keydata, sizeof(keydata), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			#endif
 		  break;
 
 		case EVNT_SW6_RELEASED:
 		#if !PL_CONFIG_EVENTS_AUTO_CLEAR
 		  EVNT_ClearEvent(EVNT_SW6_RELEASED);
 		#endif
+			#if PL_CONFIG_HAS_RADIO
+			 keydata = 'FR';
+			  RAPP_SendPayloadDataBlock(keydata, sizeof(keydata), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			#endif
 		  break;
 	  #endif
 
@@ -513,18 +568,30 @@ void KEY_Deinit(void) {
 		#if !PL_CONFIG_EVENTS_AUTO_CLEAR
 		  EVNT_ClearEvent(EVNT_SW7_PRESSED);
 		#endif
+			#if PL_CONFIG_HAS_RADIO
+			 keydata = 'G';
+			  RAPP_SendPayloadDataBlock(keydata, sizeof(keydata), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			#endif
 		 break;
 
 		case EVNT_SW7_LPRESSED:
 		#if !PL_CONFIG_EVENTS_AUTO_CLEAR
 		  EVNT_ClearEvent(EVNT_SW7_LPRESSED);
 		#endif
+			#if PL_CONFIG_HAS_RADIO
+			 keydata = 'GL';
+			  RAPP_SendPayloadDataBlock(keydata, sizeof(keydata), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			#endif
 		  break;
 
 		case EVNT_SW7_RELEASED:
 		#if !PL_CONFIG_EVENTS_AUTO_CLEAR
 		  EVNT_ClearEvent(EVNT_SW7_RELEASED);
 		#endif
+			#if PL_CONFIG_HAS_RADIO
+			 keydata = 'GR';
+			  RAPP_SendPayloadDataBlock(keydata, sizeof(keydata), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			#endif
 		  break;
 	   #endif
 
