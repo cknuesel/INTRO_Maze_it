@@ -31,8 +31,8 @@
 #if PL_CONFIG_HAS_JOYSTICK
   #include "AD1.h"
 #endif
-#if PL_CONFIG_HAS_SHELL
-  #include "Shell.h"
+#if PL_CONFIG_HAS_KEYS
+	#include "Keys.h"
 #endif
 
 static bool REMOTE_isOn = FALSE;
@@ -228,7 +228,7 @@ uint8_t REMOTE_HandleRemoteRxMessage(RAPP_MSG_Type type, uint8_t size, uint8_t *
 #if PL_CONFIG_HAS_SHELL
   uint8_t buf[48];
 #endif
-  uint16_t val;
+  KEY_DATA val;
   int16_t x, y, z;
 
   (void)size;
@@ -279,21 +279,22 @@ uint8_t REMOTE_HandleRemoteRxMessage(RAPP_MSG_Type type, uint8_t size, uint8_t *
       val = *data; /* get data value */
 #if PL_CONFIG_HAS_SHELL && PL_CONFIG_HAS_BUZZER && PL_CONFIG_HAS_REMOTE
     switch(val) {
-    case 'A':
+    case A_p:
+    	SHELL_ParseCmd((unsigned char*)"buzzer play tune");
     	break;
-    case 'AL':
+    case A_lp:
     	break;
-    case 'AR':
+    case A_r:
     	break;
-    case 'B':
+    case B_p:
     	SHELL_ParseCmd((unsigned char*)"buzzer buz 300 500");
         break;
-    case 'BL':
+    case B_lp:
     	SHELL_ParseCmd((unsigned char*)"buzzer play tune");
        	break;
-    case 'BR':
+    case B_r:
        	break;
-    case 'C':
+    case C_p:
         break;
     case 'CL':
        	break;

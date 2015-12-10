@@ -129,6 +129,30 @@ void KEY_DisableInterrupts(void);
 
 #endif
 
+typedef enum {
+  A_p,
+  A_lp,
+  A_r,
+  B_p,
+  B_lp,
+  B_r,
+  C_p,
+  C_lp,
+  C_r,
+  D_p,
+  D_lp,
+  D_r,
+  E_p,
+  E_lp,
+  E_r,
+  F_p,
+  F_lp,
+  F_r,
+  G_p,
+  G_lp,
+  G_r,
+} KEY_DATA;
+
 /*!
  * \brief Checks the key status and generates the events.
  */

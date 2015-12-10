@@ -29,6 +29,8 @@
 	static RNWK_ShortAddrType APP_dstAddr = 0xD; /* destination node address */
 #endif
 
+
+
 typedef enum {
   RNETA_NONE,
   RNETA_POWERUP, /* powered up */
@@ -123,9 +125,14 @@ static void Process(void) {
 }
 
 static void Init(void) {
-  if (RAPP_SetThisNodeAddr(RNWK_ADDR_BROADCAST)!=ERR_OK) { /* set a default address */
+  /*if (RAPP_SetThisNodeAddr(RNWK_ADDR_BROADCAST)!=ERR_OK) {  set a default address
     //APP_DebugPrint((unsigned char*)"ERR: Failed setting node address\r\n");
-  }
+  }*/
+#if defined(PL_CONFIG_BOARD_IS_ROBO)
+  RAPP_SetThisNodeAddr(0xD); /* address of this network node */
+#else
+  RAPP_SetThisNodeAddr(0xD1); /* address of this network node */
+#endif
 }
 
 static void RadioTask(void *pvParameters) {
