@@ -386,7 +386,8 @@ void KEY_Deinit(void) {
 			  EVNT_ClearEvent(EVNT_SW1_LPRESSED);
 			#endif
 			#if PL_CONFIG_HAS_RADIO && defined(PL_CONFIG_BOARD_IS_FRDM)
-			  	 RAPP_SendPayloadDataBlock(A_lp, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			  keydata = A_lp;
+			  	 RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 			#endif
 			#if defined(PL_CONFIG_BOARD_IS_ROBO)
 			  REF_CalibrateStartStop();
@@ -398,7 +399,8 @@ void KEY_Deinit(void) {
 			  EVNT_ClearEvent(EVNT_SW1_RELEASED);
 			#endif
 			#if PL_CONFIG_HAS_RADIO && defined(PL_CONFIG_BOARD_IS_FRDM)
-			  RAPP_SendPayloadDataBlock(A_r, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			  keydata = A_r;
+			  RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 			#endif
 	   #endif
 
@@ -418,7 +420,8 @@ void KEY_Deinit(void) {
 		      EVNT_ClearEvent(EVNT_SW2_LPRESSED);
 			#endif
 			#if PL_CONFIG_HAS_RADIO
-		      RAPP_SendPayloadDataBlock(B_lp, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+		      keydata = B_lp;
+		      RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 			#endif
 		      break;
 
@@ -427,7 +430,8 @@ void KEY_Deinit(void) {
 		      EVNT_ClearEvent(EVNT_SW2_RELEASED);
 		   #endif
 			#if PL_CONFIG_HAS_RADIO
-			  RAPP_SendPayloadDataBlock(B_r, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+		      keydata = B_r;
+			  RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 			#endif
 		  break;
 	   #endif
@@ -438,7 +442,8 @@ void KEY_Deinit(void) {
 		  EVNT_ClearEvent(EVNT_SW3_PRESSED);
 		#endif
 		#if PL_CONFIG_HAS_RADIO
-		  RAPP_SendPayloadDataBlock(C_p, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+		  keydata = C_p;
+		  RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 		#endif
 		break;
 
@@ -447,7 +452,8 @@ void KEY_Deinit(void) {
 		  EVNT_ClearEvent(EVNT_SW3_LPRESSED);
 		#endif
 			#if PL_CONFIG_HAS_RADIO
-			  RAPP_SendPayloadDataBlock(C_lp, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+		  	  keydata = C_lp;
+			  RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 			#endif
 		  break;
 
@@ -456,7 +462,8 @@ void KEY_Deinit(void) {
 		  EVNT_ClearEvent(EVNT_SW3_RELEASED);
 		#endif
 			#if PL_CONFIG_HAS_RADIO
-			  RAPP_SendPayloadDataBlock(C_r, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+		  	  keydata = C_r;
+			  RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 			#endif
 	   #endif
 
@@ -466,7 +473,8 @@ void KEY_Deinit(void) {
 		  EVNT_ClearEvent(EVNT_SW4_PRESSED);
 		#endif
 			#if PL_CONFIG_HAS_RADIO
-			  RAPP_SendPayloadDataBlock(D_p, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+		  	  keydata = D_p;
+			  RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 			#endif
 		  break;
 
@@ -475,7 +483,8 @@ void KEY_Deinit(void) {
 		  EVNT_ClearEvent(EVNT_SW4_LPRESSED);
 		#endif
 			#if PL_CONFIG_HAS_RADIO
-			 	 RAPP_SendPayloadDataBlock(D_lp, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+		  	  	 keydata = D_lp;
+			 	 RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 			#endif
 		  break;
 
@@ -484,7 +493,8 @@ void KEY_Deinit(void) {
 		  EVNT_ClearEvent(EVNT_SW4_RELEASED);
 		#endif
 			#if PL_CONFIG_HAS_RADIO
-			 	 RAPP_SendPayloadDataBlock(D_r, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+		  	  	 keydata = D_r;
+			 	 RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 			#endif
 		  break;
 	   #endif
@@ -495,7 +505,8 @@ void KEY_Deinit(void) {
 			EVNT_ClearEvent(EVNT_SW5_PRESSED);
 		#endif
 			#if PL_CONFIG_HAS_RADIO
-			  RAPP_SendPayloadDataBlock(E_p, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			  keydata = E_p;
+			  RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 			#endif
 			break;
 
@@ -504,7 +515,8 @@ void KEY_Deinit(void) {
 		  EVNT_ClearEvent(EVNT_SW5_LPRESSED);
 		#endif
 			#if PL_CONFIG_HAS_RADIO
-			  RAPP_SendPayloadDataBlock(E_lp, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+		  	  keydata = E_lp;
+			  RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 			#endif
 		  break;
 
@@ -513,7 +525,8 @@ void KEY_Deinit(void) {
 		  EVNT_ClearEvent(EVNT_SW5_RELEASED);
 		#endif
 			#if PL_CONFIG_HAS_RADIO
-			  RAPP_SendPayloadDataBlock(E_r, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+		  	  keydata = E_r;
+			  RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 			#endif
 		  break;
 	   #endif
@@ -524,7 +537,8 @@ void KEY_Deinit(void) {
 		  EVNT_ClearEvent(EVNT_SW6_PRESSED);
 		#endif
 			#if PL_CONFIG_HAS_RADIO
-			  RAPP_SendPayloadDataBlock(F_p, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+		  	  keydata = F_p;
+			  RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 			#endif
 		  break;
 
@@ -533,7 +547,8 @@ void KEY_Deinit(void) {
 		  EVNT_ClearEvent(EVNT_SW6_LPRESSED);
 		#endif
 			#if PL_CONFIG_HAS_RADIO
-			  RAPP_SendPayloadDataBlock(F_lp, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+		  	  keydata = F_lp;
+			  RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 			#endif
 		  break;
 
@@ -542,7 +557,8 @@ void KEY_Deinit(void) {
 		  EVNT_ClearEvent(EVNT_SW6_RELEASED);
 		#endif
 			#if PL_CONFIG_HAS_RADIO
-			  RAPP_SendPayloadDataBlock(F_r, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+		  	  keydata = F_r;
+			  RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 			#endif
 		  break;
 	  #endif
@@ -553,7 +569,8 @@ void KEY_Deinit(void) {
 		  EVNT_ClearEvent(EVNT_SW7_PRESSED);
 		#endif
 			#if PL_CONFIG_HAS_RADIO
-			  RAPP_SendPayloadDataBlock(G_p, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+		  	  keydata = G_p;
+			  RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 			#endif
 		 break;
 
@@ -562,7 +579,8 @@ void KEY_Deinit(void) {
 		  EVNT_ClearEvent(EVNT_SW7_LPRESSED);
 		#endif
 			#if PL_CONFIG_HAS_RADIO
-			  RAPP_SendPayloadDataBlock(G_lp, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+		  	  keydata = F_lp;
+			  RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 			#endif
 		  break;
 
@@ -571,7 +589,8 @@ void KEY_Deinit(void) {
 		  EVNT_ClearEvent(EVNT_SW7_RELEASED);
 		#endif
 			#if PL_CONFIG_HAS_RADIO
-			  RAPP_SendPayloadDataBlock(G_r, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+		  	  keydata = F_r;
+			  RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 			#endif
 		  break;
 	   #endif
