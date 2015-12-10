@@ -296,54 +296,38 @@ uint8_t REMOTE_HandleRemoteRxMessage(RAPP_MSG_Type type, uint8_t size, uint8_t *
        	break;
     case C_p:
         break;
-    case 'CL':
+    case C_lp:
        	break;
-    case 'CR':
+    case C_r:
      	break;
-    case 'D':
+    case D_p:
        	break;
-    case 'DL':
+    case D_lp:
     	break;
-    case 'DR':
+    case D_r:
        	break;
-    case 'E':
+    case E_p:
         break;
-    case 'EL':
+    case E_lp:
        	break;
-    case 'ER':
+    case E_r:
        	break;
-    case 'F':
+    case F_p:
         break;
-    case 'FL':
+    case F_lp:
        	break;
-    case 'FR':
+    case F_r:
     	break;
-    case 'G':
+    case G_p:
         break;
-    case 'GL':
+    case G_lp:
       	break;
-    case 'GR':
+    case G_r:
        	break;
     default:
-    	SHELL_ParseCmd((unsigned char*)"buzzer buz 300 500");
+    	SHELL_ParseCmd((unsigned char*)"buzzer buz 300 1000");
     	break;
     }
-
-      if (val=='F') { /* F button, disable remote */
-        SHELL_ParseCmd((unsigned char*)"buzzer buz 300 500");
-        REMOTE_SetOnOff(FALSE);
-        DRV_SetSpeed(0,0); /* turn off motors */
-        SHELL_SendString("Remote OFF\r\n");
-      } else if (val=='G') { /* center joystick button: enable remote */
-        SHELL_ParseCmd((unsigned char*)"buzzer buz 300 1000");
-        REMOTE_SetOnOff(TRUE);
-        DRV_SetMode(DRV_MODE_SPEED);
-        SHELL_SendString("Remote ON\r\n");
-      } else if (val=='C') { /* red 'C' button */
-        /*! \todo add functionality */
-      } else if (val=='A') { /* green 'A' button */
-        /*! \todo add functionality */
-      }
 #else
       *handled = FALSE; /* no shell and no buzzer? */
 #endif
