@@ -361,6 +361,7 @@ void KEY_Deinit(void) {
 
 #else /* default Key Event Handler */
 	void APP_KeyEvntHandler(EVNT_Handle event) {
+		KEY_DATA keydata;
 	  switch(event) {
 	  #if PL_CONFIG_NOF_KEYS >= 1	/* A */
 		case EVNT_SW1_PRESSED:
@@ -374,7 +375,8 @@ void KEY_Deinit(void) {
 			REF_RestorCalib();
 			#else
 				#if PL_CONFIG_HAS_RADIO
-					RAPP_SendPayloadDataBlock(A_p, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+					keydata = A_p;
+					RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 				#endif
 			#endif
 			break;
@@ -407,7 +409,8 @@ void KEY_Deinit(void) {
 			  EVNT_ClearEvent(EVNT_SW2_PRESSED);
 			#endif
 			#if PL_CONFIG_HAS_RADIO
-			  RAPP_SendPayloadDataBlock(B_p, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
+			  keydata = B_p;
+			  RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 			#endif
 
 		case EVNT_SW2_LPRESSED:
