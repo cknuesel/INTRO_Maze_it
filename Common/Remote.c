@@ -38,6 +38,8 @@
 static bool REMOTE_isOn = FALSE;
 static bool REMOTE_isVerbose = FALSE;
 static bool REMOTE_useJoystick = TRUE;
+static bool nitro = FALSE;
+static int16_t nitrovalue = 2;
 #if PL_CONFIG_HAS_JOYSTICK
 static uint16_t midPointX, midPointY;
 #endif
@@ -145,6 +147,7 @@ static void REMOTE_HandleMotorMsg(int16_t speedVal, int16_t directionVal, int16_
   #define MIN_VALUE  250 /* values below this value are ignored */
   #define DRIVE_DOWN 1
 
+
   if (!REMOTE_isOn) {
     return;
   }
@@ -182,14 +185,23 @@ static void REMOTE_HandleMotorMsg(int16_t speedVal, int16_t directionVal, int16_
 #endif
   } else if (speedVal>100 || speedVal<-100) { /* speed */
 #if PL_CONFIG_HAS_DRIVE
-    DRV_SetSpeed(speedVal, speedVal);
+	  if(nitro){
+		  DRV_SetSpeed((nitrovalue+2)*speedVal, (nitrovalue+2)*speedVal);
+	  } else {
+    DRV_SetSpeed(3*speedVal, 3*speedVal);
+	  }
 #else
     MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_LEFT), -speedVal/SCALE_DOWN);
     MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_RIGHT), -speedVal/SCALE_DOWN);
 #endif
   } else if (directionVal>100 || directionVal<-100) { /* direction */
 #if PL_CONFIG_HAS_DRIVE
-    DRV_SetSpeed(directionVal/DRIVE_DOWN, -directionVal/DRIVE_DOWN);
+
+    if(nitro){
+    	DRV_SetSpeed((1+nitrovalue)*directionVal, -directionVal*(1+nitrovalue));
+    	  } else {
+    		  DRV_SetSpeed(2*directionVal, -directionVal*2);
+    	  }
 #else
     MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_LEFT), -directionVal/SCALE_DOWN);
     MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_RIGHT), (directionVAl/SCALE_DOWN));
@@ -283,14 +295,15 @@ uint8_t REMOTE_HandleRemoteRxMessage(RAPP_MSG_Type type, uint8_t size, uint8_t *
     	SHELL_ParseCmd((unsigned char*)"buzzer play tune");
     	break;
     case A_lp:
+    	nitro = TRUE;
     	break;
     case A_r:
+    	nitro = FALSE;
     	break;
     case B_p:
-    	SHELL_ParseCmd((unsigned char*)"buzzer buz 300 500");
+    	SHELL_ParseCmd((unsigned char*)"line start");
         break;
     case B_lp:
-    	SHELL_ParseCmd((unsigned char*)"buzzer play tune");
        	break;
     case B_r:
        	break;
@@ -301,18 +314,22 @@ uint8_t REMOTE_HandleRemoteRxMessage(RAPP_MSG_Type type, uint8_t size, uint8_t *
     case C_r:
      	break;
     case D_p:
+    	SHELL_ParseCmd((unsigned char*)"line stop");
+    	SHELL_ParseCmd((unsigned char*)"drive mode speed");
        	break;
     case D_lp:
     	break;
     case D_r:
        	break;
     case E_p:
+    	SHELL_ParseCmd((unsigned char*)"line righthand");
         break;
     case E_lp:
        	break;
     case E_r:
        	break;
     case F_p:
+    	SHELL_ParseCmd((unsigned char*)"line lefthand");
         break;
     case F_lp:
        	break;

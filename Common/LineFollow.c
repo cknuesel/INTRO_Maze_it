@@ -24,9 +24,14 @@
 #if PL_CONFIG_HAS_DRIVE
   #include "Drive.h"
 #endif
+#if PL_CONFIG_HAS_LINE_MAZE
+  #include "Maze.h"
+#endif
 
 #define LINE_DEBUG      1   /* careful: this will slow down the PID loop frequency! */
-#define LINE_FOLLOW_FW  1   /* test setting to do forward line following */
+
+bool lefthand;
+
 
 typedef enum {
   STATE_IDLE,              /* idle, not doing anything */
@@ -38,6 +43,14 @@ typedef enum {
 
 static volatile StateType LF_currState = STATE_IDLE;
 static volatile bool LF_stopIt = FALSE;
+
+void LF_SetLeftHand(void) {
+	lefthand = TRUE;
+}
+
+void LF_SetRightHand(void) {
+	lefthand = FALSE;
+}
 
 void LF_StartFollowing(void) {
   PID_Start();
@@ -61,7 +74,7 @@ static void ChangeState(StateType newState) {
  * \brief follows a line segment.
  * \return Returns TRUE if still on line segment
  */
-static bool FollowSegment(bool forward) {
+static bool FollowSegment(void) {
   uint16_t currLine;
   REF_LineKind currLineKind;
 
@@ -76,20 +89,31 @@ static bool FollowSegment(bool forward) {
 }
 
 static void StateMachine(void) {
+	bool finished = FALSE;
   switch (LF_currState) {
     case STATE_IDLE:
       break;
     case STATE_FOLLOW_SEGMENT:
-      if (!FollowSegment(LINE_FOLLOW_FW)) {
-        LF_currState = STATE_STOP; /* stop if we do not have a line any more */
-        SHELL_SendString((unsigned char*)"No line, stopped!\r\n");
+      if (!FollowSegment()) {
+        LF_currState = STATE_TURN; /* stop if we do not have a line any more */
       }
       break;
     case STATE_TURN:
-      /*! \todo Handle maze turning? */
-      break;
+      if(MAZE_EvaluteTurn(&finished,lefthand)==ERR_FAILED){
+    	  LF_currState = STATE_STOP;
+    	  break;
+      }
+      if(finished){
+    	  LF_currState = STATE_FINISHED;
+      } else {
+    	  LF_currState = STATE_FOLLOW_SEGMENT;
+    	  break;
+      }
+
     case STATE_FINISHED:
-      /*! \todo Handle maze finished? */
+    		TURN_Turn(TURN_LEFT180,NULL);
+    		MAZE_SetSolved();
+    		LF_currState = STATE_FOLLOW_SEGMENT;
       break;
     case STATE_STOP:
       SHELL_SendString("LINE: Stop!\r\n");
@@ -119,6 +143,7 @@ static void LF_PrintHelp(const CLS1_StdIOType *io) {
   CLS1_SendHelpStr((unsigned char*)"line", (unsigned char*)"Group of line following commands\r\n", io->stdOut);
   CLS1_SendHelpStr((unsigned char*)"  help|status", (unsigned char*)"Shows line help or status\r\n", io->stdOut);
   CLS1_SendHelpStr((unsigned char*)"  start|stop", (unsigned char*)"Starts or stops line following\r\n", io->stdOut);
+  CLS1_SendHelpStr((unsigned char*)"  lefthand|righthand", (unsigned char*)"Maze solve\r\n", io->stdOut);
 }
 
 static void LF_PrintStatus(const CLS1_StdIOType *io) {
@@ -143,6 +168,11 @@ static void LF_PrintStatus(const CLS1_StdIOType *io) {
       CLS1_SendStatusStr((unsigned char*)"  state", (unsigned char*)"UNKNOWN\r\n", io->stdOut);
       break;
   } /* switch */
+  if(lefthand){
+	  CLS1_SendStatusStr((unsigned char*)"  Maze solve", (unsigned char*)"lefthand\r\n", io->stdOut);
+  } else {
+	  CLS1_SendStatusStr((unsigned char*)"  Maze solve", (unsigned char*)"righthand\r\n", io->stdOut);
+  }
 }
 
 uint8_t LF_ParseCommand(const unsigned char *cmd, bool *handled, const CLS1_StdIOType *io) {
@@ -155,10 +185,17 @@ uint8_t LF_ParseCommand(const unsigned char *cmd, bool *handled, const CLS1_StdI
     LF_PrintStatus(io);
     *handled = TRUE;
   } else if (UTIL1_strcmp((char*)cmd, (char*)"line start")==0) {
+	MAZE_ClearSolution();
     LF_StartFollowing();
     *handled = TRUE;
   } else if (UTIL1_strcmp((char*)cmd, (char*)"line stop")==0) {
     LF_StopFollowing();
+    *handled = TRUE;
+} else if (UTIL1_strcmp((char*)cmd, (char*)"line lefthand")==0) {
+    LF_SetLeftHand();
+    *handled = TRUE;
+  } else if (UTIL1_strcmp((char*)cmd, (char*)"line righthand")==0) {
+	  LF_SetRightHand();
     *handled = TRUE;
   }
   return res;
@@ -170,6 +207,7 @@ void LF_Deinit(void) {
 
 void LF_Init(void) {
   LF_currState = STATE_IDLE;
+  lefthand = TRUE;
   if (FRTOS1_xTaskCreate(LineTask, "Line", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+2, NULL) != pdPASS) {
     for(;;){} /* error */
   }

@@ -402,6 +402,7 @@ void KEY_Deinit(void) {
 			  keydata = A_r;
 			  RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 			#endif
+			  break;
 	   #endif
 
 
@@ -414,6 +415,7 @@ void KEY_Deinit(void) {
 			  keydata = B_p;
 			  RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 			#endif
+			  break;
 
 		case EVNT_SW2_LPRESSED:
 		    #if !PL_CONFIG_EVENTS_AUTO_CLEAR
@@ -465,7 +467,9 @@ void KEY_Deinit(void) {
 		  	  keydata = C_r;
 			  RAPP_SendPayloadDataBlock(&keydata, sizeof(KEY_DATA), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_NONE);
 			#endif
+			  break;
 	   #endif
+
 
 	  #if PL_CONFIG_NOF_KEYS >= 4	/* D */
 	   case EVNT_SW4_PRESSED:

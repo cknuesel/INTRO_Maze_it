@@ -24,11 +24,11 @@
   #include "Drive.h"
 #endif
 
-#define TURN_STEPS_90         675
+#define TURN_STEPS_90         660
   /*!< number of steps for a 90 degree turn */
-#define TURN_STEPS_LINE       230
+#define TURN_STEPS_LINE       120
   /*!< number of steps stepping over the line */
-#define TURN_STEPS_POST_LINE  155
+#define TURN_STEPS_POST_LINE  170
   /*!< number of steps after the line, before making a turn */
 #define TURN_STEPS_90_TIMEOUT_MS        1000
 #define TURN_STEPS_LINE_TIMEOUT_MS      200
@@ -168,6 +168,8 @@ void TURN_Turn(TURN_Kind kind, TURN_StopFct stopIt) {
       MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_LEFT), 0);
       MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_RIGHT), 0);
       break;
+    case TURN_FINISHED:
+    	StepsTurn(-(2*TURN_Steps90), 2*TURN_Steps90, stopIt, TURN_STEPS_90_TIMEOUT_MS*2);
   default:
     break;
   }
